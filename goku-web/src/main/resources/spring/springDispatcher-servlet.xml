@@ -26,20 +26,6 @@
         <context:include-filter type="annotation"
                                 expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
-    <!-- 静态文件访问配置 -->
-    <mvc:resources mapping="/resources/**" location="/resources/"/>
-    <!-- 文件上传支持 -->
-    <bean id="multipartResolver"
-          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="5000000"></property>
-    </bean>
-    <!-- velocity支持 -->
-    <bean id="velocityConfigurer"
-          class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-        <property name="configLocation">
-            <value>classpath:velocity.properties</value>
-        </property>
-    </bean>
     <!-- 返回json或者html -->
     <bean id="contentNegotiationManager"
           class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
@@ -57,20 +43,14 @@
             class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
         <property name="order" value="0"/>
         <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
-        <property name="viewResolvers">
+        <property name="viewResolvers"><!-- 针对freemarker的视图配置 -->
             <list>
-                <bean
-                        class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
-                    <property name="cache" value="false"/>
-                    <property name="layoutUrl" value="/layout/main.vm"/>
-                    <property name="prefix" value="/templates/"/>
-                    <property name="suffix" value=".vm"/>
-                    <property name="requestContextAttribute" value="rc"/>
-                    <property name="exposeSpringMacroHelpers" value="true"/>
-                    <property name="contentType" value="text/html;charset=UTF-8"/>
-                    <property name="viewClass"
-                              value="org.springframework.web.servlet.view.velocity.VelocityLayoutView"/>
-                </bean>
+                <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"/>
+            </list>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <bean class="com.alibaba.fastjson.support.spring.FastJsonJsonView"/>
             </list>
         </property>
     </bean>
@@ -80,19 +60,5 @@
         <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
         <bean class="com.yongle.goku.base.interceptor.AllInterceptor"/>
     </mvc:interceptors>
-    <aop:aspectj-autoproxy proxy-target-class="true" />
-    <!--<aop:config>-->
-        <!--<aop:aspect id="signatureAspect" ref="signatureInterceptor">-->
-            <!--&lt;!&ndash;配置com.yongle.goku.*.controller包下所有类或接口的所有方法&ndash;&gt;-->
-            <!--<aop:pointcut id="signaturePointcut"-->
-                          <!--expression="execution(* com.yongle.goku.*.controller.*.*(..)) &amp;&amp; @annotation(com.yongle.goku.base.interceptor.Signature)"/>-->
-            <!--<aop:around pointcut-ref="signaturePointcut" method="checkSignature"/>-->
-        <!--</aop:aspect>-->
-        <!--<aop:aspect id="tokenAspect" ref="tokenInterceptor">-->
-            <!--&lt;!&ndash;配置com.yongle.goku.*.controller.*.*WithToken的方法&ndash;&gt;-->
-            <!--<aop:pointcut id="tokenPointcut"-->
-                          <!--expression="execution(* com.yongle.goku.*.controller.*.*WithToken(..))"/>-->
-            <!--<aop:around pointcut-ref="tokenPointcut" method="checkToken"/>-->
-        <!--</aop:aspect>-->
-    <!--</aop:config>-->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 </beans>

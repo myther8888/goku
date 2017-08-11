@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class BaseController {
-    private final static Logger log = LoggerFactory.getLogger(BaseController.class);
+    final Logger log = LoggerFactory.getLogger(getClass());
     protected ReturnBean returnBean;
 
     /**
