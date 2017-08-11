@@ -14,7 +14,7 @@ import java.util.Enumeration;
  */
 public class AllInterceptor implements HandlerInterceptor {
 
-    private static Logger log = LoggerFactory.getLogger(AllInterceptor.class);
+    private final Logger log = LoggerFactory.getLogger(getClass());
     private final ThreadLocal<Long> time = new ThreadLocal<>();
 
     @Override

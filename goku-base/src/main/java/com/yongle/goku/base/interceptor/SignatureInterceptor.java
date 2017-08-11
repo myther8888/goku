@@ -18,7 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -27,7 +31,7 @@ import java.util.*;
 @Aspect
 @Component
 public class SignatureInterceptor {
-    private static Logger log = LoggerFactory.getLogger(SignatureInterceptor.class);
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private HttpServletRequest request;
