@@ -7,15 +7,11 @@ import com.yongle.goku.utils.MD5;
 import com.yongle.goku.utils.ReturnCode;
 import com.yongle.goku.vo.ReturnBean;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -28,20 +24,13 @@ import java.util.Set;
 /**
  * Created by weinh on 2016/11/20.
  */
-@Aspect
-@Component
 public class SignatureInterceptor {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
+    @Resource
     private HttpServletRequest request;
 
-    @Pointcut("@annotation(com.yongle.goku.base.interceptor.Signature)")
-    public void checkSignature() {
-    }
-
-    @Around("checkSignature()")
-    public ReturnBean doAround(ProceedingJoinPoint pjp) {
+    public ReturnBean checkSignature(ProceedingJoinPoint pjp) {
         ReturnBean returnBean = ConfigUtils.generateReturnBean(ReturnCode.ERROR);
         try {
             Object[] args = pjp.getArgs();

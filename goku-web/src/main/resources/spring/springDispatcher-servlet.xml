@@ -43,7 +43,7 @@
             class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
         <property name="order" value="0"/>
         <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
-        <property name="viewResolvers"><!-- 针对freemarker的视图配置 -->
+        <property name="viewResolvers">
             <list>
                 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"/>
             </list>
@@ -61,4 +61,12 @@
         <bean class="com.yongle.goku.base.interceptor.AllInterceptor"/>
     </mvc:interceptors>
     <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <bean id="signatureInterceptor" class="com.yongle.goku.base.interceptor.SignatureInterceptor"/>
+    <aop:config>
+        <aop:aspect id="signatureAspect" ref="signatureInterceptor">
+            <aop:pointcut id="signaturePointcut" expression="@annotation(com.yongle.goku.base.interceptor.Signature)"/>
+            <aop:around pointcut-ref="signaturePointcut" method="checkSignature"/>
+        </aop:aspect>
+    </aop:config>
 </beans>

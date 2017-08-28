@@ -12,7 +12,8 @@ import javax.sql.DataSource;
  * Created by weinh on 2016/5/7.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/spring/applicationContext-*.xml"})
+@ContextConfiguration(locations = {"classpath:/spring/applicationContext-service.xml",
+        "classpath:/spring/applicationContext-dao.xml"})
 public class JUnitMapperBase extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Override
