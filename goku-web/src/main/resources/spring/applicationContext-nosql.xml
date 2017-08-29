@@ -9,8 +9,8 @@
         <property name="maxWaitMillis" value="${redis.maxWaitMillis}"/>
         <property name="minIdle" value="${redis.minIdle}"/>
     </bean>
-
-    <bean id="redisSentinelConfiguration"
+    <!--主从哨兵配置-->
+    <bean id="redisSentinelConfigurationEX"
           class="com.yongle.goku.utils.RedisSentinelConfigurationEX">
         <constructor-arg value="${redis.host.port}"/>
         <property name="master">
@@ -19,18 +19,20 @@
             </bean>
         </property>
     </bean>
+    <!--集群配置-->
     <bean id="redisClusterConfigurationEX"
           class="com.yongle.goku.utils.RedisClusterConfigurationEX">
         <constructor-arg value="${redis.host.port}"/>
         <property name="maxRedirects" value="${redis.maxRedirects}"/>
     </bean>
-    <bean id="jedisConnFactory"
+    <bean id="jedisConnectionFactory"
           class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
         <!--<property name="password" value="${redis.password}"/>-->
         <property name="poolConfig" ref="jedisPoolConfig"/>
         <constructor-arg ref="redisClusterConfigurationEX"/>
     </bean>
+
     <bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
-        <property name="connectionFactory" ref="jedisConnFactory"/>
+        <property name="connectionFactory" ref="jedisConnectionFactory"/>
     </bean>
 </beans>

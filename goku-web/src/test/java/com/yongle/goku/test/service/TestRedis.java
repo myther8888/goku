@@ -51,11 +51,13 @@ public class TestRedis extends JUnitServiceBase {
 
     @Test
     public void testCluster() {
-        stringRedisTemplate.opsForValue().set("a1", "a1");
-        stringRedisTemplate.opsForValue().set("def789", "def789");
-
-        log.info("a1={}", stringRedisTemplate.opsForValue().get("a1"));
-        log.info("def789={}", stringRedisTemplate.opsForValue().get("def789"));
-        log.info("b={}", stringRedisTemplate.opsForValue().get("b"));
+        for (int i = 0; i < 100000; i++) {
+            try {
+                stringRedisTemplate.opsForValue().set(String.valueOf(i), String.valueOf(i));
+                log.info("正在向redis中添加：{}", i);
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }
+        }
     }
 }
