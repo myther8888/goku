@@ -17,8 +17,7 @@
             content-negotiation-manager="contentNegotiationManager">
         <!-- 使用fastjson作为json转换类 -->
         <mvc:message-converters register-defaults="true">
-            <bean
-                    class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter"></bean>
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter"/>
         </mvc:message-converters>
     </mvc:annotation-driven>
     <context:component-scan base-package="com.yongle.goku.*.controller"
@@ -39,8 +38,7 @@
         <property name="defaultContentType" value="application/json"/>
     </bean>
     <!-- 视图解析器 -->
-    <bean
-            class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
         <property name="order" value="0"/>
         <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
         <property name="viewResolvers">

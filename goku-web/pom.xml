@@ -22,7 +22,7 @@
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>1.3.2</version>
+                <version>1.3.5</version>
                 <configuration>
                     <verbose>true</verbose>
                     <overwrite>true</overwrite>
@@ -46,9 +46,4 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
-    <properties>
-        <java.model.dir>com.yongle.goku.model</java.model.dir>
-        <sql.map.dir>com.yongle.goku</sql.map.dir>
-        <java.client.dir>com.yongle.goku</java.client.dir>
-    </properties>
 </project>
