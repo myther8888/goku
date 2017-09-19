@@ -5,12 +5,11 @@ import com.yongle.goku.utils.constant.ReturnCode;
 import com.yongle.goku.vo.ReturnBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class BaseController {
     final Logger log = LoggerFactory.getLogger(getClass());
     protected ReturnBean returnBean;
@@ -22,7 +21,6 @@ public class BaseController {
      * @return
      */
     @ExceptionHandler({Exception.class})
-    @ResponseBody
     public ReturnBean exception(Exception e) {
         returnBean = ConfigUtils.generateReturnBean(ReturnCode.ERROR);
         if (ConfigUtils.getProperty("debug").equals("true")) {

@@ -42,8 +42,8 @@
     <dependencies>
         <dependency>
             <groupId>com.yongle</groupId>
-            <artifactId>goku-user</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <artifactId>goku-demo</artifactId>
+            <version>${version}</version>
         </dependency>
     </dependencies>
 </project>
