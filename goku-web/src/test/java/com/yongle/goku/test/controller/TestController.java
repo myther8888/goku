@@ -1,8 +1,6 @@
 package com.yongle.goku.test.controller;
 
-import com.yongle.goku.user.controller.UserInfoController;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -11,8 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
  * Created by weinh on 2016/5/7.
  */
 public class TestController extends JUnitControllerBase {
-    @Autowired
-    private UserInfoController userInfoController;
+//    @Autowired
+//    private UserInfoController userInfoController;
 
     /**
      * 测试页面使用

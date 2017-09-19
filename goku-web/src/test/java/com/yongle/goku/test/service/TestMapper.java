@@ -7,9 +7,7 @@ import com.yongle.goku.demo.mapper.DemoMapper;
 import com.yongle.goku.demo.service.DemoService;
 import com.yongle.goku.model.demo.Demo;
 import com.yongle.goku.model.demo.DemoExample;
-import com.yongle.goku.user.mapper.UserInfoMapper;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -18,10 +16,6 @@ import java.util.List;
  * Created by weinh on 2016/5/7.
  */
 public class TestMapper extends JUnitServiceBase {
-
-    @Autowired
-    private UserInfoMapper userInfoMapper;
-
     @Resource
     private DemoMapper demoMapper;
 
