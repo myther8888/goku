@@ -58,7 +58,6 @@
         <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
         <bean class="com.yongle.goku.base.interceptor.AllInterceptor"/>
     </mvc:interceptors>
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <bean id="signatureInterceptor" class="com.yongle.goku.base.interceptor.SignatureInterceptor"/>
     <aop:config>

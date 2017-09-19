@@ -1,4 +1,4 @@
-package com.yongle.goku.utils;
+package com.yongle.goku.utils.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,7 +1,7 @@
 package com.yongle.goku.base.controller;
 
 import com.yongle.goku.utils.ConfigUtils;
-import com.yongle.goku.utils.ReturnCode;
+import com.yongle.goku.utils.constant.ReturnCode;
 import com.yongle.goku.vo.ReturnBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.yongle.goku.utils;
+package com.yongle.goku.utils.security;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

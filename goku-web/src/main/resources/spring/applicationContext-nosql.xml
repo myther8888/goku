@@ -11,7 +11,7 @@
     </bean>
     <!--主从哨兵配置-->
     <bean id="redisSentinelConfigurationEX"
-          class="com.yongle.goku.utils.RedisSentinelConfigurationEX">
+          class="com.yongle.goku.utils.redis.RedisSentinelConfigurationEX">
         <constructor-arg value="${redis.host.port}"/>
         <property name="master">
             <bean class="org.springframework.data.redis.connection.RedisNode">
@@ -21,7 +21,7 @@
     </bean>
     <!--集群配置-->
     <bean id="redisClusterConfigurationEX"
-          class="com.yongle.goku.utils.RedisClusterConfigurationEX">
+          class="com.yongle.goku.utils.redis.RedisClusterConfigurationEX">
         <constructor-arg value="${redis.host.port}"/>
         <property name="maxRedirects" value="${redis.maxRedirects}"/>
     </bean>

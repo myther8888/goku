@@ -1,4 +1,4 @@
-package com.yongle.goku.utils;
+package com.yongle.goku.utils.constant;
 
 /**
  * Created by weinh on 2016/5/8.

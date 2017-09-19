@@ -1,4 +1,4 @@
-package com.yongle.goku.utils;
+package com.yongle.goku.utils.redis;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

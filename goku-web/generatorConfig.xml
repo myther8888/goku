@@ -13,7 +13,7 @@
         </commentGenerator>
         <!--数据库连接 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://rm-bp1y4sxrvbln69yi9o.mysql.rds.aliyuncs.com/hscrmuat?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false"
+                        connectionURL="jdbc:mysql://rm-bp1y4sxrvbln69yi9o.mysql.rds.aliyuncs.com/crm_dev?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false"
                         userId="hscrm"
                         password="hscrm@123">
         </jdbcConnection>

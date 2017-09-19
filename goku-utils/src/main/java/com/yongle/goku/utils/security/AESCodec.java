@@ -1,4 +1,4 @@
-package com.yongle.goku.utils;
+package com.yongle.goku.utils.security;
 
 
 import org.apache.commons.codec.binary.Base64;
