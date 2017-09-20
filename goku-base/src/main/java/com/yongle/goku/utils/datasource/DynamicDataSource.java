@@ -31,8 +31,6 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 
     private AtomicLong counter = new AtomicLong(0);
 
-    private static final Long MAX_POOL = Long.MAX_VALUE;
-
     private final Lock lock = new ReentrantLock();
 
     @Override
@@ -65,24 +63,24 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
         }
         int index = 0;
         if (readDataSourcePollPattern == 1) {
+            index = (int) (counter.get() % readDataSourceSize);
             //轮询方式
             long currValue = counter.incrementAndGet();
-            if ((currValue + 1) >= MAX_POOL) {
+            if (currValue >= readDataSourceSize) {
                 try {
                     lock.lock();
-                    if ((currValue + 1) >= MAX_POOL) {
+                    if (currValue >= readDataSourceSize) {
                         counter.set(0);
                     }
                 } finally {
                     lock.unlock();
                 }
             }
-            index = (int) (currValue % readDataSourceSize);
         } else {
             //随机方式
             index = ThreadLocalRandom.current().nextInt(0, readDataSourceSize);
         }
-        logger.info("读数据源为下标：{}", index);
+        logger.debug("读数据源为下标：{}", index);
         return dynamicDataSourceGlobal.name() + index;
     }
 

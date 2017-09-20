@@ -1,6 +1,6 @@
 package com.yongle.goku.base.interceptor;
 
-import com.yongle.goku.utils.constant.Constants;
+import com.yongle.goku.constant.Constants;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

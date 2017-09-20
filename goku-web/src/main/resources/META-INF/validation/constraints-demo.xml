@@ -1,0 +1,16 @@
+<constraint-mappings
+        xmlns="http://jboss.org/xml/ns/javax/validation/mapping"
+        version="1.1">
+    <bean class="com.yongle.goku.model.demo.Demo" ignore-annotations="true">
+        <field name="id">
+            <constraint annotation="javax.validation.constraints.NotNull"/>
+        </field>
+        <field name="name">
+            <constraint annotation="javax.validation.constraints.NotNull"/>
+            <constraint annotation="javax.validation.constraints.Size">
+                <element name="min">1</element>
+                <element name="max">20</element>
+            </constraint>
+        </field>
+    </bean>
+</constraint-mappings>

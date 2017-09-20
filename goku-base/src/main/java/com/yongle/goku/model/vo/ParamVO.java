@@ -1,4 +1,4 @@
-package com.yongle.goku.vo;
+package com.yongle.goku.model.vo;
 
 /**
  * Created by weinh on 2016/12/26.

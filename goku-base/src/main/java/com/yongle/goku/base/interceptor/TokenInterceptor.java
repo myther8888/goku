@@ -1,12 +1,10 @@
 package com.yongle.goku.base.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
-import com.yongle.goku.base.service.UserInfoService;
-import com.yongle.goku.utils.*;
-import com.yongle.goku.utils.constant.Constants;
-import com.yongle.goku.utils.constant.ReturnCode;
+import com.yongle.goku.constant.Constants;
+import com.yongle.goku.model.vo.ResultVO;
+import com.yongle.goku.utils.TextUtils;
 import com.yongle.goku.utils.redis.RedisUtils;
-import com.yongle.goku.vo.ReturnBean;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,11 +25,11 @@ public class TokenInterceptor {
     @Autowired
     RedisUtils redisUtils;
 
-    @Autowired
-    UserInfoService userInfoService;
+//    @Autowired
+//    UserInfoService userInfoService;
 
-    public ReturnBean checkToken(ProceedingJoinPoint pjp) throws Exception {
-        ReturnBean returnBean = ConfigUtils.generateReturnBean(ReturnCode.TOKEN_ERROR);
+    public ResultVO checkToken(ProceedingJoinPoint pjp) throws Exception {
+        ResultVO returnBean = new ResultVO();
         try {
             Object[] args = pjp.getArgs();
             HttpServletRequest request = null;
@@ -50,7 +48,7 @@ public class TokenInterceptor {
                     redisUtils.expire(RedisUtils.RedisKey.getTokenKey(jsonObject.getString(Constants.TOKEN)),
                             Constants.TOKEN_EXPIRE_DAY, TimeUnit.DAYS);//每次检查token成功，延长token有效期7天
                     request.setAttribute(Constants.USERID_ATTRIBUTE, Long.parseLong(userId));
-                    returnBean = (ReturnBean) pjp.proceed();
+                    returnBean = (ResultVO) pjp.proceed();
                 }
             }
         } catch (Throwable throwable) {

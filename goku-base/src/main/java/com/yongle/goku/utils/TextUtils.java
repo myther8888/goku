@@ -1,6 +1,6 @@
 package com.yongle.goku.utils;
 
-import com.yongle.goku.utils.constant.SystemParamConst;
+import com.yongle.goku.constant.SystemParamConst;
 import com.yongle.goku.utils.security.MD5;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -61,7 +61,7 @@ public class TextUtils extends StringUtils {
      * @return MD5加密密码
      */
     public static String generatePassword(final String name, final String password) {
-        return MD5.GetMD5Code(name + SystemParamConst.PASSWORDSYMBOL
+        return MD5.GetMD5Code(name + SystemParamConst.PASSWORD_SYMBOL
                 + password);
     }
 

@@ -52,7 +52,7 @@ public class TestController extends JUnitControllerBase {
 //        userInfo.setNickName("abc");
 //        userInfo.setPassword("abc");
 //        userInfo.setEmail("abc@cc.com");
-//        ReturnBean returnBean = userInfoController.login(userInfo);
+//        ResultVO returnBean = userInfoController.login(userInfo);
 //        System.out.println(JSONObject.toJSONString(returnBean));
     }
 }

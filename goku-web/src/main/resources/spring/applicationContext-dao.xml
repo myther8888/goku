@@ -41,7 +41,7 @@
     </bean>
     <bean id="readDataSource2" parent="dataSource" init-method="init">
         <!-- 数据库基本信息配置 -->
-        <property name="url" value="${jdbc.write.url}"/>
+        <property name="url" value="${jdbc.read.url}"/>
         <property name="username" value="${jdbc.read.username}"/>
         <property name="password" value="${jdbc.read.password}"/>
     </bean>

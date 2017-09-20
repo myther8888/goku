@@ -1,11 +1,10 @@
 package com.yongle.goku.base.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
-import com.yongle.goku.utils.ConfigUtils;
-import com.yongle.goku.utils.constant.Constants;
+import com.yongle.goku.constant.Constants;
+import com.yongle.goku.constant.ErrorEnum;
+import com.yongle.goku.model.vo.ResultVO;
 import com.yongle.goku.utils.security.MD5;
-import com.yongle.goku.utils.constant.ReturnCode;
-import com.yongle.goku.vo.ReturnBean;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +29,8 @@ public class SignatureInterceptor {
     @Resource
     private HttpServletRequest request;
 
-    public ReturnBean checkSignature(ProceedingJoinPoint pjp) {
-        ReturnBean returnBean = ConfigUtils.generateReturnBean(ReturnCode.ERROR);
+    public ResultVO checkSignature(ProceedingJoinPoint pjp) {
+        ResultVO vo = new ResultVO(ErrorEnum.ERROR);
         try {
             Object[] args = pjp.getArgs();
             JSONObject jsonObject = new JSONObject();
@@ -58,11 +57,11 @@ public class SignatureInterceptor {
                 log.warn("提交参数为空，请检查");
             }
             if (request.getHeader(Constants.TIMESTAMP) == null) {//时间撮不存在或为空
-                return ConfigUtils.generateReturnBean(ReturnCode.TIMESTAMP_EMPTY);
+                return new ResultVO(ErrorEnum.TIMESTAMP_EMPTY);
             } else if (Math.abs(System.currentTimeMillis() -
                     Long.parseLong(request.getHeader(Constants.TIMESTAMP)))
                     > Constants.DEVIATION_TIME) {//时间撮和当前时间相差10分钟以上
-                return ConfigUtils.generateReturnBean(ReturnCode.TIMESTAMP_ERROR);
+                return new ResultVO(ErrorEnum.TIMESTAMP_ERROR);
             }
             Enumeration headerNames = request.getHeaderNames();
             while (headerNames.hasMoreElements()) {
@@ -71,14 +70,14 @@ public class SignatureInterceptor {
             }
             log.info("提交参数与header：{}", jsonObject);
             if (!createSignature(jsonObject).equals(jsonObject.getString(Constants.SIGNATURE))) {
-                return ConfigUtils.generateReturnBean(ReturnCode.SIGNATURE_ERROR);
+                return new ResultVO(ErrorEnum.SIGNATURE_ERROR);
             }
-            returnBean = (ReturnBean) pjp.proceed();
+            vo = (ResultVO) pjp.proceed();
         } catch (Throwable throwable) {
             log.error(throwable.getMessage(), throwable);
-            returnBean.setDescription(throwable.getLocalizedMessage());
+            vo.setDescription(throwable.getLocalizedMessage());
         }
-        return returnBean;
+        return vo;
     }
 
     private String createSignature(JSONObject jsonObject) {
@@ -92,11 +91,11 @@ public class SignatureInterceptor {
 
         String array[] = list.toArray(new String[]{});
         Arrays.sort(array);//字典序排序
-        String str = "";
+        StringBuilder sb = new StringBuilder();
         for (String string : array) {//key1value1key2value2...串起来
-            str += string;
+            sb.append(string);
         }
-        return MD5.GetMD5Code(str);
+        return MD5.GetMD5Code(sb.toString());
     }
 
     private String getReqType(ProceedingJoinPoint pjp) throws Exception {
