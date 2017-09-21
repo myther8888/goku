@@ -67,6 +67,8 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dynamicDataSource"/>
         <property name="plugins">
+            <!--这个插件顺序有讲究，分页插件必须放前面，-->
+            <!--调用的时候拦截器链将最后一个调用分页插件，才能不影响读写分离-->
             <array>
                 <bean class="com.github.pagehelper.PageInterceptor">
                     <property name="properties">
