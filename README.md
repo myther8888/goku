@@ -5,7 +5,6 @@
 spring
 spring mvc
 mybatis
-c3p0
+druid
 redis
-activemq
 ```

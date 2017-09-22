@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -29,7 +30,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 
     private int readDataSourcePollPattern = 0; //获取读数据源方式，0：随机，1：轮询
 
-    private AtomicLong counter = new AtomicLong(0);
+    private AtomicInteger counter = new AtomicInteger(0);
 
     private final Lock lock = new ReentrantLock();
 
@@ -62,23 +63,25 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
             return DynamicDataSourceGlobal.WRITE.name();
         }
         int index = 0;
-        if (readDataSourcePollPattern == 1) {
-            index = (int) (counter.get() % readDataSourceSize);
-            //轮询方式
-            long currValue = counter.incrementAndGet();
-            if (currValue >= readDataSourceSize) {
-                try {
-                    lock.lock();
-                    if (currValue >= readDataSourceSize) {
-                        counter.set(0);
+        if (readDataSourceSize != 1) {
+            if (readDataSourcePollPattern == 1) {
+                index = (int) (counter.get() % readDataSourceSize);
+                //轮询方式
+                long currValue = counter.incrementAndGet();
+                if (currValue >= readDataSourceSize) {
+                    try {
+                        lock.lock();
+                        if (currValue >= readDataSourceSize) {
+                            counter.set(0);
+                        }
+                    } finally {
+                        lock.unlock();
                     }
-                } finally {
-                    lock.unlock();
                 }
+            } else {
+                //随机方式
+                index = ThreadLocalRandom.current().nextInt(0, readDataSourceSize);
             }
-        } else {
-            //随机方式
-            index = ThreadLocalRandom.current().nextInt(0, readDataSourceSize);
         }
         logger.debug("读数据源为下标：{}", index);
         return dynamicDataSourceGlobal.name() + index;
