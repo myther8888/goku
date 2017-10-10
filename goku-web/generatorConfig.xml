@@ -39,7 +39,7 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!--对应数据库表 mysql可以加入主键自增 字段命名 忽略某字段等-->
-        <table tableName="demo">
+        <table tableName="shiro_user">
             <generatedKey column="id" identity="true" sqlStatement="Mysql"/>
         </table>
         <!--<table tableName="user_verification_code">-->
