@@ -45,5 +45,10 @@
             <artifactId>goku-demo</artifactId>
             <version>${version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.yongle</groupId>
+            <artifactId>goku-system</artifactId>
+            <version>${version}</version>
+        </dependency>
     </dependencies>
 </project>

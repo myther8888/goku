@@ -35,7 +35,7 @@
 
     <bean id="statelessAuthcFilter" class="com.yongle.goku.shiro.filter.StatelessAuthcFilter"/>
 
-    <!-- Shiro的Web过滤器 -->
+     <!--Shiro的Web过滤器-->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="filters">
@@ -45,7 +45,7 @@
         </property>
         <property name="filterChainDefinitions">
             <value>
-                /**=statelessAuthc
+                <!--/**=statelessAuthc-->
             </value>
         </property>
     </bean>
