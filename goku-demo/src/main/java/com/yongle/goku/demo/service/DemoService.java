@@ -1,9 +1,8 @@
 package com.yongle.goku.demo.service;
 
 import com.yongle.goku.model.demo.Demo;
+import com.yongle.goku.model.vo.Page;
 import com.yongle.goku.model.vo.ResultVO;
-
-import java.util.List;
 
 /**
  * 类 名 称：DemoService.java
@@ -16,5 +15,5 @@ public interface DemoService {
 
     void b();
 
-    ResultVO<List<Demo>> getDemos();
+    ResultVO<Page<Demo>> getDemos();
 }

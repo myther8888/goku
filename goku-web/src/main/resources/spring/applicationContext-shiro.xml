@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/util
-       http://www.springframework.org/schema/util/spring-util.xsd">
-    <!-- Realm实现 -->
-    <bean id="statelessRealm" class="com.yongle.goku.shiro.realm.StatelessRealm">
-        <property name="cachingEnabled" value="false"/>
-    </bean>
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <!-- Subject工厂 -->
-    <bean id="subjectFactory" class="com.yongle.goku.shiro.mgt.StatelessDefaultSubjectFactory"/>
+    <bean id="subjectFactory" class="com.yongle.goku.system.shiro.StatelessDefaultSubjectFactory"/>
 
     <!-- 会话管理器 -->
     <bean id="sessionManager" class="org.apache.shiro.session.mgt.DefaultSessionManager">
@@ -21,7 +14,7 @@
 
     <!-- 安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="statelessRealm"/>
+        <property name="realm" ref="tokenRealm"/>
         <property name="subjectDAO.sessionStorageEvaluator.sessionStorageEnabled" value="false"/>
         <property name="subjectFactory" ref="subjectFactory"/>
         <property name="sessionManager" ref="sessionManager"/>
@@ -33,19 +26,25 @@
         <property name="arguments" ref="securityManager"/>
     </bean>
 
-    <bean id="statelessAuthcFilter" class="com.yongle.goku.shiro.filter.StatelessAuthcFilter"/>
+    <bean id="tokenAuthFilter" class="com.yongle.goku.system.shiro.filter.TokenAuthFilter">
+        <property name="excludeUrl">
+            <list>
+                <value>/users/login</value>
+            </list>
+        </property>
+    </bean>
 
      <!--Shiro的Web过滤器-->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="filters">
             <util:map>
-                <entry key="statelessAuthc" value-ref="statelessAuthcFilter"/>
+                <entry key="tokenAuthFilter" value-ref="tokenAuthFilter"/>
             </util:map>
         </property>
         <property name="filterChainDefinitions">
             <value>
-                <!--/**=statelessAuthc-->
+                /**=tokenAuthFilter
             </value>
         </property>
     </bean>

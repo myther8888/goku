@@ -25,4 +25,7 @@ public class Constants {
     public static final String REQ_PARAMS = "params";
     public static final String USERID_ATTRIBUTE = "user_id";
     public static final long DEVIATION_TIME = 1000 * 60 * 10;//10分钟
+
+    public static final String PASSWORD_SALT = "YONGLE";
+    public static final String CURRENT_USER = "CURRENT_USER";
 }

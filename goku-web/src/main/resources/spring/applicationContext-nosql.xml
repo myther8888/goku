@@ -20,16 +20,16 @@
         </property>
     </bean>
     <!--集群配置-->
-    <bean id="redisClusterConfigurationEX"
-          class="com.yongle.goku.utils.redis.RedisClusterConfigurationEX">
-        <constructor-arg value="${redis.host.port}"/>
-        <property name="maxRedirects" value="${redis.maxRedirects}"/>
-    </bean>
+    <!--<bean id="redisClusterConfigurationEX"-->
+    <!--class="com.yongle.goku.utils.redis.RedisClusterConfigurationEX">-->
+    <!--<constructor-arg value="${redis.host.port}"/>-->
+    <!--<property name="maxRedirects" value="${redis.maxRedirects}"/>-->
+    <!--</bean>-->
     <bean id="jedisConnectionFactory"
           class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
-        <!--<property name="password" value="${redis.password}"/>-->
+        <property name="password" value="${redis.password}"/>
         <property name="poolConfig" ref="jedisPoolConfig"/>
-        <constructor-arg ref="redisClusterConfigurationEX"/>
+        <constructor-arg ref="redisSentinelConfigurationEX"/>
     </bean>
 
     <bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">

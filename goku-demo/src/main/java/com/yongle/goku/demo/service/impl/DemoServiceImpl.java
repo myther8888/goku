@@ -3,11 +3,12 @@ package com.yongle.goku.demo.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yongle.goku.constant.ErrorEnum;
 import com.yongle.goku.demo.mapper.DemoMapper;
 import com.yongle.goku.demo.service.DemoService;
 import com.yongle.goku.model.demo.Demo;
 import com.yongle.goku.model.demo.DemoExample;
-import com.yongle.goku.model.vo.Paging;
+import com.yongle.goku.model.vo.Page;
 import com.yongle.goku.model.vo.ResultVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,20 +53,15 @@ public class DemoServiceImpl implements DemoService {
     }
 
     @Override
-    public ResultVO<List<Demo>> getDemos() {
+    public ResultVO<Page<Demo>> getDemos() {
         DemoExample example = new DemoExample();
         PageHelper.startPage(1, 10);
         List<Demo> demos = demoMapper.selectByExample(example);
         PageInfo<Demo> pageInfo = new PageInfo<>(demos);
+        Page<Demo> page = new Page<>(pageInfo);
 
-        Paging paging = new Paging();
-        paging.setLimit(10);
-        paging.setStart(1);
-        paging.setTotal(pageInfo.getTotal());
-
-        ResultVO<List<Demo>> vo = new ResultVO<>();
-        vo.setData(demos);
-        vo.setPaging(paging);
+        ResultVO<Page<Demo>> vo = new ResultVO<>(ErrorEnum.SUCCESS);
+        vo.setData(page);
         return vo;
     }
 

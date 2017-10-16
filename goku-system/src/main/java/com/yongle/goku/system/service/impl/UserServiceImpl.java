@@ -1,9 +1,28 @@
 package com.yongle.goku.system.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.yongle.goku.base.service.impl.BaseServiceImpl;
+import com.yongle.goku.constant.Constants;
+import com.yongle.goku.constant.ErrorEnum;
+import com.yongle.goku.model.system.SysUser;
+import com.yongle.goku.model.system.SysUserExample;
+import com.yongle.goku.model.vo.Page;
 import com.yongle.goku.model.vo.ResultVO;
 import com.yongle.goku.model.vo.system.UserVO;
+import com.yongle.goku.system.mapper.SysUserMapper;
 import com.yongle.goku.system.service.UserService;
+import com.yongle.goku.utils.EntityUtils;
+import com.yongle.goku.utils.redis.RedisUtils;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
 
 /**
  * 类 名 称：UserServiceImpl.java
@@ -12,39 +31,43 @@ import org.springframework.stereotype.Service;
  * 开发时间：2017年10月13日
  */
 @Service
-public class UserServiceImpl implements UserService {
-    @Override
-    public ResultVO save(UserVO userVO, UserVO currentUser) {
-        return null;
-    }
-
-    @Override
-    public ResultVO update(Long id, UserVO userVO, UserVO currentUser) {
-        return null;
-    }
-
-    @Override
-    public ResultVO delete(Long id, UserVO currentUser) {
-        return null;
-    }
-
-    @Override
-    public ResultVO findOne(Long id, UserVO currentUser) {
-        return null;
-    }
+public class UserServiceImpl extends BaseServiceImpl<UserVO> implements UserService {
+    @Resource
+    SysUserMapper userMapper;
 
     @Override
     public ResultVO findAll(UserVO userVO, UserVO currentUser) {
-        return null;
-    }
+        Page page = userVO.getPage();
+        PageHelper.startPage(page.getPageNum(), page.getPageSize());
+        List<SysUser> users = userMapper.selectByExample(new SysUserExample());
+        PageInfo<SysUser> pageInfo = new PageInfo<>(users);
+        Page<SysUser> a = new Page<>(pageInfo);
 
-    @Override
-    public ResultVO recover(Long id, UserVO currentUser) {
-        return null;
+        ResultVO<Page<SysUser>> resultVO = new ResultVO<>(ErrorEnum.SUCCESS);
+        resultVO.setData(a);
+        return resultVO;
     }
 
     @Override
     public ResultVO login(UserVO userVO) {
-        return null;
+        SysUserExample example = new SysUserExample();
+        example.createCriteria().andUsernameEqualTo(userVO.getUsername()).andPasswordEqualTo(getPassword(userVO));
+        List<SysUser> users = userMapper.selectByExample(example);
+        if (CollectionUtils.isEmpty(users) || 1 != users.size()) {
+            return new ResultVO(ErrorEnum.LOGIN_ERROR);
+        }
+        String tokenStr = UUID.randomUUID().toString();
+        ResultVO<UserVO> resultVO = new ResultVO<>(ErrorEnum.SUCCESS);
+        userVO = userVO.convert2VO(users.get(0));
+        userVO.setToken(tokenStr);
+        redisUtils.hMSet(RedisUtils.RedisKey.getTokenKey(tokenStr), EntityUtils.objectToHash(users.get(0)));
+        redisUtils.expire(RedisUtils.RedisKey.getTokenKey(tokenStr), 60 * 60, TimeUnit.SECONDS);
+        resultVO.setData(userVO);
+        return resultVO;
+    }
+
+    private String getPassword(UserVO userVO) {
+        Md5Hash md5Hash = new Md5Hash(userVO.getUsername() + userVO.getPassword(), Constants.PASSWORD_SALT);
+        return md5Hash.toString();
     }
 }

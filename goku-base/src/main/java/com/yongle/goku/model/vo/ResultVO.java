@@ -10,7 +10,6 @@ public class ResultVO<T> {
     private String errorInfo;
     private String description;
     private T data;
-    private Paging paging;
 
     public ResultVO() {
         this.errorCode = ErrorEnum.SUCCESS.errorCode;
@@ -52,13 +51,5 @@ public class ResultVO<T> {
 
     public void setErrorCode(Integer errorCode) {
         this.errorCode = errorCode;
-    }
-
-    public Paging getPaging() {
-        return paging;
-    }
-
-    public void setPaging(Paging paging) {
-        this.paging = paging;
     }
 }

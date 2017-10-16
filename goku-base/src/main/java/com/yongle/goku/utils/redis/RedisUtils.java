@@ -3,13 +3,16 @@ package com.yongle.goku.utils.redis;
 import com.yongle.goku.utils.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -18,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class RedisUtils {
-    private static Logger log = LoggerFactory.getLogger(RedisUtils.class);
+    private Logger log = LoggerFactory.getLogger(getClass());
 
     public static class RedisKey {
         public static String getLoginRepeatKey(String source) {
@@ -58,9 +61,13 @@ public class RedisUtils {
         }
     }
 
-    @Autowired
+    @Resource
     private StringRedisTemplate stringRedisTemplate;
 
+    @PostConstruct
+    public void init() {
+        stringRedisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+    }
     /**
      * 自增
      *
@@ -73,6 +80,14 @@ public class RedisUtils {
             return stringRedisTemplate.opsForValue().increment(key, value);
         }
         return null;
+    }
+
+    public void hMSet(String key, Map<String, Object> map) {
+        stringRedisTemplate.opsForHash().putAll(key, map);
+    }
+
+    public Map<Object, Object> hGetAll(String key) {
+        return stringRedisTemplate.opsForHash().entries(key);
     }
 
     /**
