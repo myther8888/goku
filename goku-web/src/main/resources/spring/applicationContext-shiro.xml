@@ -34,17 +34,30 @@
         </property>
     </bean>
 
-     <!--Shiro的Web过滤器-->
-    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-        <property name="securityManager" ref="securityManager"/>
-        <property name="filters">
+    <!--&lt;!&ndash;Shiro的Web过滤器&ndash;&gt;-->
+    <!--<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">-->
+    <!--<property name="securityManager" ref="securityManager"/>-->
+    <!--<property name="filters">-->
+    <!--<util:map>-->
+    <!--<entry key="tokenAuthFilter" value-ref="tokenAuthFilter"/>-->
+    <!--</util:map>-->
+    <!--</property>-->
+    <!--<property name="filterChainDefinitions">-->
+    <!--<value>-->
+    <!--/**=tokenAuthFilter-->
+    <!--</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <bean id="filterChainManager" class="com.yongle.goku.system.shiro.filter.CustomDefaultFilterChainManager">
+        <property name="customFilters">
             <util:map>
                 <entry key="tokenAuthFilter" value-ref="tokenAuthFilter"/>
             </util:map>
         </property>
-        <property name="filterChainDefinitions">
+        <property name="defaultFilterChainDefinitions">
             <value>
-                /**=tokenAuthFilter
+                /** = tokenAuthFilter,sysUser
             </value>
         </property>
     </bean>
