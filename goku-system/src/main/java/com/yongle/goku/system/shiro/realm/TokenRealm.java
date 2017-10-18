@@ -14,13 +14,12 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
- * 类 名 称：TokenRealm.java
- * 功能说明：
- * 开发人员：weinh
- * 开发时间：2017年10月16日
+ * @author weinh
  */
 @Component
 public class TokenRealm extends AuthorizingRealm {
@@ -33,10 +32,13 @@ public class TokenRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        Long id = (Long) principals.getPrimaryPrincipal();
+        Integer id = (Integer) principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        authorizationInfo.setRoles(roleUserService.findRoles(id));
-//        authorizationInfo.setStringPermissions(userService.findPermissions(id));
+        authorizationInfo.setRoles(roleUserService.findRoles(id.longValue()));
+        Set<String> p = new HashSet<>();
+        p.add("/users");
+        p.add("/user/{id}");
+        authorizationInfo.setStringPermissions(p);
         return authorizationInfo;
     }
 

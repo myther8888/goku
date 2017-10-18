@@ -6,6 +6,7 @@ import com.yongle.goku.model.vo.ResultVO;
 import com.yongle.goku.model.vo.system.UserVO;
 import com.yongle.goku.system.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,10 +17,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 类 名 称：UserController.java
- * 功能说明：
- * 开发人员：weinh
- * 开发时间：2017年10月13日
+ * @author weinh
  */
 @RestController
 @RequestMapping("/users")
@@ -41,5 +39,11 @@ public class UserController extends BaseController {
         Page page = new Page(pageNum, pageSize);
         userVO.setPage(page);
         return userService.findAll(userVO, getCurrentUser(request));
+    }
+
+    @GetMapping("/user/{id}")
+    public ResultVO findOne(@PathVariable(name = "id") Long id,
+                            HttpServletRequest request) {
+        return userService.findOne(id, getCurrentUser(request));
     }
 }

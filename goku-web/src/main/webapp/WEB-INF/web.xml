@@ -3,7 +3,7 @@
 		 xmlns="http://java.sun.com/xml/ns/javaee"
 		 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		 id="WebApp_ID" version="2.5">
-	<display-name>漂流瓶</display-name>
+	<display-name>goku</display-name>
 	<!-- spring支持 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>

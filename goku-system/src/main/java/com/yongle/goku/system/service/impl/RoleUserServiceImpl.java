@@ -13,10 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 类 名 称：RoleUserServiceImpl.java
- * 功能说明：
- * 开发人员：weinh
- * 开发时间：2017年10月16日
+ * @author weinh
  */
 @Service
 public class RoleUserServiceImpl extends BaseServiceImpl implements RoleUserService {

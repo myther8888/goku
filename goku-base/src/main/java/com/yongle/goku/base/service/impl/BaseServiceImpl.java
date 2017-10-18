@@ -11,10 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 /**
- * 类 名 称：BaseServiceImpl.java
- * 功能说明：
- * 开发人员：weinh
- * 开发时间：2017年10月13日
+ * @author weinh
  */
 @Service
 public class BaseServiceImpl<T> implements BaseService<T> {

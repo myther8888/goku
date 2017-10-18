@@ -26,14 +26,6 @@
         <property name="arguments" ref="securityManager"/>
     </bean>
 
-    <bean id="tokenAuthFilter" class="com.yongle.goku.system.shiro.filter.TokenAuthFilter">
-        <property name="excludeUrl">
-            <list>
-                <value>/users/login</value>
-            </list>
-        </property>
-    </bean>
-
     <!--&lt;!&ndash;Shiro的Web过滤器&ndash;&gt;-->
     <!--<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">-->
     <!--<property name="securityManager" ref="securityManager"/>-->
@@ -48,20 +40,23 @@
     <!--</value>-->
     <!--</property>-->
     <!--</bean>-->
-
-    <bean id="filterChainManager" class="com.yongle.goku.system.shiro.filter.CustomDefaultFilterChainManager">
-        <property name="customFilters">
+    <bean id="shiroFilter" class="com.yongle.goku.system.shiro.filter.ShiroPermissionFactory">
+        <!-- Shiro的核心安全接口,这个属性是必须的 -->
+        <property name="securityManager" ref="securityManager"/>
+        <property name="filters">
             <util:map>
                 <entry key="tokenAuthFilter" value-ref="tokenAuthFilter"/>
+                <entry key="permissionAuthFilter" value-ref="permissionAuthFilter"/>
             </util:map>
         </property>
-        <property name="defaultFilterChainDefinitions">
+        <!-- Shiro连接约束配置,即过滤链的定义 -->
+        <property name="filterChainDefinitions">
             <value>
-                /** = tokenAuthFilter,sysUser
+                /users/login = anon
+                /** = tokenAuthFilter,permissionAuthFilter
             </value>
         </property>
     </bean>
-
     <!-- Shiro生命周期处理器-->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 </beans>

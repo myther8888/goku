@@ -25,10 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
- * 类 名 称：UserServiceImpl.java
- * 功能说明：
- * 开发人员：weinh
- * 开发时间：2017年10月13日
+ * @author weinh
  */
 @Service
 public class UserServiceImpl extends BaseServiceImpl<UserVO> implements UserService {
@@ -42,7 +39,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserVO> implements UserServ
         List<SysUser> users = userMapper.selectByExample(new SysUserExample());
         PageInfo<SysUser> pageInfo = new PageInfo<>(users);
         Page<SysUser> a = new Page<>(pageInfo);
-
         ResultVO<Page<SysUser>> resultVO = new ResultVO<>(ErrorEnum.SUCCESS);
         resultVO.setData(a);
         return resultVO;
@@ -69,5 +65,15 @@ public class UserServiceImpl extends BaseServiceImpl<UserVO> implements UserServ
     private String getPassword(UserVO userVO) {
         Md5Hash md5Hash = new Md5Hash(userVO.getUsername() + userVO.getPassword(), Constants.PASSWORD_SALT);
         return md5Hash.toString();
+    }
+
+    @Override
+    public ResultVO findOne(Long id, UserVO currentUser) {
+        SysUser user = userMapper.selectByPrimaryKey(id);
+        ResultVO<UserVO> resultVO = new ResultVO<>(ErrorEnum.SUCCESS);
+        UserVO userVO = new UserVO();
+        userVO.convert2VO(user);
+        resultVO.setData(userVO);
+        return resultVO;
     }
 }
