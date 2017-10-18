@@ -53,7 +53,7 @@
         <property name="filterChainDefinitions">
             <value>
                 /users/login = anon
-                /** = tokenAuthFilter,permissionAuthFilter
+                <!--/** = tokenAuthFilter,permissionAuthFilter-->
             </value>
         </property>
     </bean>

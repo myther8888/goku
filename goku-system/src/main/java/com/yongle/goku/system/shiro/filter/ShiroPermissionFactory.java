@@ -35,8 +35,8 @@ public class ShiroPermissionFactory extends ShiroFilterFactoryBean {
         Map<String, String> otherChains = new HashMap<>(1);
 //        permissions.forEach(menu -> {
         //perms.add(e)
-        otherChains.put("/users", "roles[1]");
-        otherChains.put("/user/{id}", "roles[1]");
+//        otherChains.put("/users", "roles[1]");
+        otherChains.put("/users/user/*", "anon");
 //        });
         //加载配置默认的过滤链
         Ini ini = new Ini();

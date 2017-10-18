@@ -44,16 +44,13 @@ public class UserVO extends SysUser {
         return user;
     }
 
-    public UserVO convert2VO(@NotNull SysUser user) {
-        UserVO vo = null;
+    public void convert2VO(@NotNull SysUser user) {
         try {
             if (user != null) {
-                vo = new UserVO();
-                BeanUtils.copyProperties(user, vo, IGNORE_PROPERTIES);
+                BeanUtils.copyProperties(user, this, IGNORE_PROPERTIES);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return vo;
     }
 }

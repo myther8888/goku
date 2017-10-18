@@ -54,7 +54,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserVO> implements UserServ
         }
         String tokenStr = UUID.randomUUID().toString();
         ResultVO<UserVO> resultVO = new ResultVO<>(ErrorEnum.SUCCESS);
-        userVO = userVO.convert2VO(users.get(0));
+        userVO.convert2VO(users.get(0));
         userVO.setToken(tokenStr);
         redisUtils.hMSet(RedisUtils.RedisKey.getTokenKey(tokenStr), EntityUtils.objectToHash(users.get(0)));
         redisUtils.expire(RedisUtils.RedisKey.getTokenKey(tokenStr), 60 * 60, TimeUnit.SECONDS);
