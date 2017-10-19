@@ -1,8 +1,10 @@
 package com.yongle.goku.system.shiro.filter;
 
 import com.alibaba.fastjson.JSONObject;
+import com.yongle.goku.constant.Constants;
 import com.yongle.goku.constant.ErrorEnum;
 import com.yongle.goku.model.vo.ResultVO;
+import com.yongle.goku.model.vo.system.UserVO;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.web.filter.AccessControlFilter;
@@ -34,6 +36,8 @@ public class TokenAuthFilter extends AccessControlFilter {
         UsernamePasswordToken token = new UsernamePasswordToken("", tokenStr, null);
         try {
             getSubject(request, response).login(token);
+            UserVO userVO = (UserVO) getSubject(request, response).getPrincipal();
+            request.setAttribute(Constants.CURRENT_USER, userVO);
         } catch (Exception e) {
             onAuthFail(response, ErrorEnum.TOKEN_ERROR);
             return false;

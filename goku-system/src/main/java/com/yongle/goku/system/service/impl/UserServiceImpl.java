@@ -76,4 +76,12 @@ public class UserServiceImpl extends BaseServiceImpl<UserVO> implements UserServ
         resultVO.setData(userVO);
         return resultVO;
     }
+
+    @Override
+    public ResultVO update(Long id, UserVO userVO, UserVO currentUser) {
+        userVO.setId(id);
+        userVO.setUsername(null);
+        userMapper.updateByPrimaryKeySelective(userVO);
+        return new ResultVO(ErrorEnum.SUCCESS);
+    }
 }

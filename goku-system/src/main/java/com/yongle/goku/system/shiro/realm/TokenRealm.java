@@ -1,6 +1,8 @@
 package com.yongle.goku.system.shiro.realm;
 
+import com.yongle.goku.model.vo.system.UserVO;
 import com.yongle.goku.system.service.RoleUserService;
+import com.yongle.goku.utils.EntityUtils;
 import com.yongle.goku.utils.redis.RedisUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -32,12 +34,12 @@ public class TokenRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        Integer id = (Integer) principals.getPrimaryPrincipal();
+        Long id = ((UserVO) principals.getPrimaryPrincipal()).getId();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        authorizationInfo.setRoles(roleUserService.findRoles(id.longValue()));
+        authorizationInfo.setRoles(roleUserService.findRoles(id));
         Set<String> p = new HashSet<>();
-        p.add("/users");
-        p.add("/users/user/*");
+        p.add("user:read");
+//        p.add("/users/user/*");
         authorizationInfo.setStringPermissions(p);
         return authorizationInfo;
     }
@@ -49,6 +51,7 @@ public class TokenRealm extends AuthorizingRealm {
         if (MapUtils.isEmpty(map)) {
             return null;
         }
-        return new SimpleAuthenticationInfo(map.get("id"), tokenStr, getName());
+        UserVO userVO = EntityUtils.hashToObject(map, UserVO.class);
+        return new SimpleAuthenticationInfo(userVO, tokenStr, getName());
     }
 }

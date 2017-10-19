@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * 类 名 称：ShiroPermissionFactory.java
  * 功能说明：
- * 开发人员：weinh
+ * @author weinh
  * 开发时间：2017年10月16日
  */
 public class ShiroPermissionFactory extends ShiroFilterFactoryBean {
@@ -36,7 +36,11 @@ public class ShiroPermissionFactory extends ShiroFilterFactoryBean {
 //        permissions.forEach(menu -> {
         //perms.add(e)
 //        otherChains.put("/users", "roles[1]");
-        otherChains.put("/users/user/*", "anon");
+
+        otherChains.put("/users/user/*",
+                "tokenAuthFilter,roleAuthFilter[1],permissionAuthFilter[user]");
+        otherChains.put("/**",
+                "tokenAuthFilter");
 //        });
         //加载配置默认的过滤链
         Ini ini = new Ini();

@@ -46,14 +46,14 @@
         <property name="filters">
             <util:map>
                 <entry key="tokenAuthFilter" value-ref="tokenAuthFilter"/>
-                <entry key="permissionAuthFilter" value-ref="permissionAuthFilter"/>
+                <entry key="roleAuthFilter" value-ref="roleAuthFilter"/>
             </util:map>
         </property>
         <!-- Shiro连接约束配置,即过滤链的定义 -->
         <property name="filterChainDefinitions">
             <value>
                 /users/login = anon
-                <!--/** = tokenAuthFilter,permissionAuthFilter-->
+                <!--/** = tokenAuthFilter-->
             </value>
         </property>
     </bean>
