@@ -53,7 +53,7 @@
         <property name="password" value="${jdbc.write.password}"/>
     </bean>
     <!--动态数据源-->
-    <bean id="dynamicDataSource" class="com.yongle.goku.utils.datasource.DynamicDataSource">
+    <bean id="dynamicDataSource" class="com.yongle.dshelper.DynamicDataSource">
         <property name="writeDataSource" ref="writeDataSource"/>
         <property name="readDataSources">
             <list>
@@ -77,7 +77,7 @@
                         </value>
                     </property>
                 </bean>
-                <bean class="com.yongle.goku.utils.datasource.DynamicPlugin"/>
+                <bean class="com.yongle.dshelper.DynamicPlugin"/>
             </array>
         </property>
     </bean>
@@ -87,7 +87,7 @@
     </bean>
     <!-- 事物 -->
     <bean id="transactionManager"
-          class="com.yongle.goku.utils.datasource.DynamicDataSourceTransactionManager">
+          class="com.yongle.dshelper.DynamicDataSourceTransactionManager">
         <property name="dataSource" ref="dynamicDataSource"/>
     </bean>
     <!--开启事务注解-->
