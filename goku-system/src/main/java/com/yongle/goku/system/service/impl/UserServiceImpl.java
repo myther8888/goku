@@ -15,6 +15,7 @@ import com.yongle.goku.system.service.UserService;
 import com.yongle.goku.utils.EntityUtils;
 import com.yongle.goku.utils.redis.RedisUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -83,5 +84,12 @@ public class UserServiceImpl extends BaseServiceImpl<UserVO> implements UserServ
         userVO.setUsername(null);
         userMapper.updateByPrimaryKeySelective(userVO);
         return new ResultVO(ErrorEnum.SUCCESS);
+    }
+
+
+    @Cacheable(value = "default")
+    @Override
+    public String getAbc() {
+        return "def";
     }
 }

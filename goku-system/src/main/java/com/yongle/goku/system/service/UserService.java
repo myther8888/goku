@@ -12,4 +12,6 @@ import com.yongle.goku.model.vo.system.UserVO;
  */
 public interface UserService extends BaseService<UserVO> {
     ResultVO login(UserVO userVO);
+
+    String getAbc();
 }

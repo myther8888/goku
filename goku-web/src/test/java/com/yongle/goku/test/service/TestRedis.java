@@ -1,6 +1,8 @@
 package com.yongle.goku.test.service;
 
+import com.yongle.goku.system.service.UserService;
 import org.junit.Test;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
@@ -14,6 +16,9 @@ import javax.annotation.Resource;
 public class TestRedis extends JUnitServiceBase {
     @Resource
     StringRedisTemplate stringRedisTemplate;
+
+    @Resource
+    UserService userService;
 
     @Test
     public void testPipeline() {
@@ -59,5 +64,10 @@ public class TestRedis extends JUnitServiceBase {
                 log.error(e.getMessage(), e);
             }
         }
+    }
+
+    @Test
+    public void test() {
+        log.info(userService.getAbc());
     }
 }
