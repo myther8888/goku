@@ -35,24 +35,21 @@
         <constructor-arg ref="redisSentinelConfigurationEX"/>
     </bean>
 
+    <bean id="genericJackson2JsonRedisSerializer"
+          class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
     <bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
         <property name="connectionFactory" ref="jedisConnectionFactory"/>
+        <property name="valueSerializer" ref="genericJackson2JsonRedisSerializer"/>
+        <property name="hashValueSerializer" ref="genericJackson2JsonRedisSerializer"/>
     </bean>
 
-    <cache:annotation-driven/>
-    <!-- spring自己的换管理器，这里定义了两个缓存位置名称 ，既注解中的value -->
-    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
-        <property name="caches">
+    <bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+        <constructor-arg name="redisOperations" ref="stringRedisTemplate"/>
+        <property name="cacheNames">
             <set>
-                <bean class="com.yongle.goku.utils.redis.RedisCache">
-                    <property name="stringRedisTemplate" ref="stringRedisTemplate"/>
-                    <property name="name" value="default"/>
-                </bean>
-                <bean class="com.yongle.goku.utils.redis.RedisCache">
-                    <property name="stringRedisTemplate" ref="stringRedisTemplate"/>
-                    <property name="name" value="commonCache"/>
-                </bean>
+                <value>default1111</value>
             </set>
         </property>
     </bean>
+    <cache:annotation-driven cache-manager="redisCacheManager"/>
 </beans>

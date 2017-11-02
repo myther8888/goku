@@ -1,5 +1,6 @@
 package com.yongle.goku.test.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yongle.goku.system.service.UserService;
 import org.junit.Test;
 import org.springframework.cache.annotation.Cacheable;
@@ -68,6 +69,8 @@ public class TestRedis extends JUnitServiceBase {
 
     @Test
     public void test() {
-        log.info(userService.getAbc());
+        log.info(userService.getAbc("123"));
+
+        log.info(JSONObject.toJSONString(userService.getUser(100L)));
     }
 }

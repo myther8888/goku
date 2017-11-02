@@ -87,9 +87,20 @@ public class UserServiceImpl extends BaseServiceImpl<UserVO> implements UserServ
     }
 
 
-    @Cacheable(value = "default")
+    @Cacheable(value = "default1111", key = "'system:param'+#id")
     @Override
-    public String getAbc() {
+    public String getAbc(String id) {
+        logger.info("不从缓存获取");
         return "def";
+    }
+
+    @Cacheable(value = "default1111", key = "'user:'+#id")
+    @Override
+    public UserVO getUser(Long id) {
+        logger.info("数据库查询user：{}", id);
+        UserVO vo = new UserVO();
+        vo.setId(id);
+        vo.setUsername("admin");
+        return vo;
     }
 }

@@ -4,10 +4,8 @@ import com.yongle.goku.utils.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,7 +15,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by weinh on 2016/5/21.
+ * @author weinh
  */
 @Service
 public class RedisUtils {
@@ -64,10 +62,6 @@ public class RedisUtils {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
-    @PostConstruct
-    public void init() {
-        stringRedisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-    }
     /**
      * 自增
      *
