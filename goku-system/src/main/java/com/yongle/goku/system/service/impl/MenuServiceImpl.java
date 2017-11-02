@@ -1,6 +1,7 @@
 package com.yongle.goku.system.service.impl;
 
 import com.yongle.goku.base.service.impl.BaseServiceImpl;
+import com.yongle.goku.constant.SysDict;
 import com.yongle.goku.model.system.SysMenu;
 import com.yongle.goku.model.system.SysMenuExample;
 import com.yongle.goku.system.mapper.SysMenuMapper;
@@ -23,4 +24,12 @@ public class MenuServiceImpl extends BaseServiceImpl implements MenuService {
     public List<SysMenu> findAll() {
         return menuMapper.selectByExample(new SysMenuExample());
     }
+
+    @Override
+    public List<SysMenu> findAllFunctionPoint() {
+        SysMenuExample example = new SysMenuExample();
+        example.createCriteria().andTypeEqualTo(SysDict.MenuType.FUNCTION_POINT.code);
+        return null;
+    }
+
 }

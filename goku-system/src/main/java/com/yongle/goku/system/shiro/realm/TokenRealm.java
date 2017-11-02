@@ -38,7 +38,7 @@ public class TokenRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         authorizationInfo.setRoles(roleUserService.findRoles(id));
         Set<String> p = new HashSet<>();
-        p.add("user:read");
+        p.add("read");
 //        p.add("/users/user/*");
         authorizationInfo.setStringPermissions(p);
         return authorizationInfo;

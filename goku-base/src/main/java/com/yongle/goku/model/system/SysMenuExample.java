@@ -523,6 +523,146 @@ public class SysMenuExample {
             addCriterion("type not between", value1, value2, "type");
             return (Criteria) this;
         }
+
+        public Criteria andModuleIsNull() {
+            addCriterion("module is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleIsNotNull() {
+            addCriterion("module is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleEqualTo(String value) {
+            addCriterion("module =", value, "module");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleNotEqualTo(String value) {
+            addCriterion("module <>", value, "module");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleGreaterThan(String value) {
+            addCriterion("module >", value, "module");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleGreaterThanOrEqualTo(String value) {
+            addCriterion("module >=", value, "module");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleLessThan(String value) {
+            addCriterion("module <", value, "module");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleLessThanOrEqualTo(String value) {
+            addCriterion("module <=", value, "module");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleLike(String value) {
+            addCriterion("module like", value, "module");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleNotLike(String value) {
+            addCriterion("module not like", value, "module");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleIn(List<String> values) {
+            addCriterion("module in", values, "module");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleNotIn(List<String> values) {
+            addCriterion("module not in", values, "module");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleBetween(String value1, String value2) {
+            addCriterion("module between", value1, value2, "module");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleNotBetween(String value1, String value2) {
+            addCriterion("module not between", value1, value2, "module");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionIsNull() {
+            addCriterion("action is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionIsNotNull() {
+            addCriterion("action is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionEqualTo(String value) {
+            addCriterion("action =", value, "action");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionNotEqualTo(String value) {
+            addCriterion("action <>", value, "action");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionGreaterThan(String value) {
+            addCriterion("action >", value, "action");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionGreaterThanOrEqualTo(String value) {
+            addCriterion("action >=", value, "action");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionLessThan(String value) {
+            addCriterion("action <", value, "action");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionLessThanOrEqualTo(String value) {
+            addCriterion("action <=", value, "action");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionLike(String value) {
+            addCriterion("action like", value, "action");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionNotLike(String value) {
+            addCriterion("action not like", value, "action");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionIn(List<String> values) {
+            addCriterion("action in", values, "action");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionNotIn(List<String> values) {
+            addCriterion("action not in", values, "action");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionBetween(String value1, String value2) {
+            addCriterion("action between", value1, value2, "action");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionNotBetween(String value1, String value2) {
+            addCriterion("action not between", value1, value2, "action");
+            return (Criteria) this;
+        }
     }
 
     /**

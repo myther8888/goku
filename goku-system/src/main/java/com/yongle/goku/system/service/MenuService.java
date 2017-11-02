@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface MenuService extends BaseService {
     List<SysMenu> findAll();
+
+    List<SysMenu> findAllFunctionPoint();
 }

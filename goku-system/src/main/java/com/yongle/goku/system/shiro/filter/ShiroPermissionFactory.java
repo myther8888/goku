@@ -37,8 +37,9 @@ public class ShiroPermissionFactory extends ShiroFilterFactoryBean {
         //perms.add(e)
 //        otherChains.put("/users", "roles[1]");
 
-        otherChains.put("/users/user/*",
-                "tokenAuthFilter,roleAuthFilter[1],permissionAuthFilter[user]");
+
+        otherChains.put("/system/users/user/*",
+                "tokenAuthFilter,permissionAuthFilter[]");
         otherChains.put("/**",
                 "tokenAuthFilter");
 //        });

@@ -80,4 +80,16 @@ public class SysDict {
             return false;
         }
     }
+
+    public enum MenuType {
+        FUNCTION_POINT("3", "功能点");
+
+        public final String code;
+        public final String name;
+
+        MenuType(String code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+    }
 }

@@ -1,9 +1,9 @@
 package com.yongle.goku.system.service.impl;
 
 import com.yongle.goku.base.service.impl.BaseServiceImpl;
-import com.yongle.goku.model.system.SysRoleUser;
-import com.yongle.goku.model.system.SysRoleUserExample;
-import com.yongle.goku.system.mapper.SysRoleUserMapper;
+import com.yongle.goku.model.system.SysUserRole;
+import com.yongle.goku.model.system.SysUserRoleExample;
+import com.yongle.goku.system.mapper.SysUserRoleMapper;
 import com.yongle.goku.system.service.RoleUserService;
 import org.springframework.stereotype.Service;
 
@@ -19,15 +19,15 @@ import java.util.Set;
 public class RoleUserServiceImpl extends BaseServiceImpl implements RoleUserService {
 
     @Resource
-    private SysRoleUserMapper roleUserMapper;
+    private SysUserRoleMapper roleUserMapper;
 
     @Override
     public Set<String> findRoles(Long userId) {
-        SysRoleUserExample example = new SysRoleUserExample();
+        SysUserRoleExample example = new SysUserRoleExample();
         example.createCriteria().andUserIdEqualTo(userId);
-        List<SysRoleUser> roleUserList = roleUserMapper.selectByExample(example);
+        List<SysUserRole> roleUserList = roleUserMapper.selectByExample(example);
         Set<String> roles = new HashSet<>(roleUserList.size());
-        for (SysRoleUser roleUser : roleUserList) {
+        for (SysUserRole roleUser : roleUserList) {
             roles.add(roleUser.getRoleId().toString());
         }
         return roles;

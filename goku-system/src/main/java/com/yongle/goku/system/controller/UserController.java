@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author weinh
  */
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/system/users")
 public class UserController extends BaseController {
 
     @Resource
