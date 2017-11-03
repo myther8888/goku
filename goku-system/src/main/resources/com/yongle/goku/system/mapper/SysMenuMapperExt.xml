@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yongle.goku.system.mapper.SysMenuMapperExt">
+  <select id="findAllFunctionPoint" resultType="com.yongle.goku.model.system.SysMenu">
+    SELECT
+      id, pid, name, url, type, action
+    FROM
+      sys_menu
+    WHERE TYPE='3'
+  </select>
+  <select id="findByUserId" resultType="com.yongle.goku.model.system.SysMenu">
+    SELECT
+      id, pid, name, url, type, action
+    FROM
+      sys_menu sm
+      INNER JOIN sys_menu_role smr
+        ON sm.id = smr.menu_id
+      INNER JOIN sys_user_role sur
+        ON sur.role_id = smr.role_id
+        AND sur.user_id = #{userId}
+  </select>
+  <select id="findFunctionPointByUserId" resultType="com.yongle.goku.model.system.SysMenu">
+    SELECT
+      id, pid, name, url, type, action
+    FROM
+      sys_menu sm
+      INNER JOIN sys_menu_role smr
+        ON sm.id = smr.menu_id
+      INNER JOIN sys_user_role sur
+        ON sur.role_id = smr.role_id
+        AND sur.user_id = #{userId}
+    WHERE sm.type='3'
+  </select>
+</mapper>

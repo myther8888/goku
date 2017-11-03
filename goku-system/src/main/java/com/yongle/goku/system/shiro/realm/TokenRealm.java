@@ -1,7 +1,7 @@
 package com.yongle.goku.system.shiro.realm;
 
 import com.yongle.goku.model.vo.system.UserVO;
-import com.yongle.goku.system.service.RoleUserService;
+import com.yongle.goku.system.service.MenuService;
 import com.yongle.goku.utils.EntityUtils;
 import com.yongle.goku.utils.redis.RedisUtils;
 import org.apache.commons.collections.MapUtils;
@@ -16,9 +16,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author weinh
@@ -30,17 +28,13 @@ public class TokenRealm extends AuthorizingRealm {
     private RedisUtils redisUtils;
 
     @Resource
-    private RoleUserService roleUserService;
+    private MenuService menuService;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         Long id = ((UserVO) principals.getPrimaryPrincipal()).getId();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        authorizationInfo.setRoles(roleUserService.findRoles(id));
-        Set<String> p = new HashSet<>();
-        p.add("read");
-//        p.add("/users/user/*");
-        authorizationInfo.setStringPermissions(p);
+        authorizationInfo.setStringPermissions(menuService.getPermission(id));
         return authorizationInfo;
     }
 

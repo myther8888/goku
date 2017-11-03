@@ -1,13 +1,10 @@
 package com.yongle.goku.system.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.yongle.goku.base.service.impl.BaseServiceImpl;
 import com.yongle.goku.constant.Constants;
 import com.yongle.goku.constant.ErrorEnum;
 import com.yongle.goku.model.system.SysUser;
 import com.yongle.goku.model.system.SysUserExample;
-import com.yongle.goku.model.vo.Page;
 import com.yongle.goku.model.vo.ResultVO;
 import com.yongle.goku.model.vo.system.UserVO;
 import com.yongle.goku.system.mapper.SysUserMapper;
@@ -15,12 +12,12 @@ import com.yongle.goku.system.service.UserService;
 import com.yongle.goku.utils.EntityUtils;
 import com.yongle.goku.utils.redis.RedisUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -32,18 +29,6 @@ import java.util.concurrent.TimeUnit;
 public class UserServiceImpl extends BaseServiceImpl<UserVO> implements UserService {
     @Resource
     SysUserMapper userMapper;
-
-    @Override
-    public ResultVO findAll(UserVO userVO, UserVO currentUser) {
-        Page page = userVO.getPage();
-        PageHelper.startPage(page.getPageNum(), page.getPageSize());
-        List<SysUser> users = userMapper.selectByExample(new SysUserExample());
-        PageInfo<SysUser> pageInfo = new PageInfo<>(users);
-        Page<SysUser> a = new Page<>(pageInfo);
-        ResultVO<Page<SysUser>> resultVO = new ResultVO<>(ErrorEnum.SUCCESS);
-        resultVO.setData(a);
-        return resultVO;
-    }
 
     @Override
     public ResultVO login(UserVO userVO) {
@@ -68,39 +53,4 @@ public class UserServiceImpl extends BaseServiceImpl<UserVO> implements UserServ
         return md5Hash.toString();
     }
 
-    @Override
-    public ResultVO findOne(Long id, UserVO currentUser) {
-        SysUser user = userMapper.selectByPrimaryKey(id);
-        ResultVO<UserVO> resultVO = new ResultVO<>(ErrorEnum.SUCCESS);
-        UserVO userVO = new UserVO();
-        userVO.convert2VO(user);
-        resultVO.setData(userVO);
-        return resultVO;
-    }
-
-    @Override
-    public ResultVO update(Long id, UserVO userVO, UserVO currentUser) {
-        userVO.setId(id);
-        userVO.setUsername(null);
-        userMapper.updateByPrimaryKeySelective(userVO);
-        return new ResultVO(ErrorEnum.SUCCESS);
-    }
-
-
-    @Cacheable(value = "default1111", key = "'system:param'+#id")
-    @Override
-    public String getAbc(String id) {
-        logger.info("不从缓存获取");
-        return "def";
-    }
-
-    @Cacheable(value = "default1111", key = "'user:'+#id")
-    @Override
-    public UserVO getUser(Long id) {
-        logger.info("数据库查询user：{}", id);
-        UserVO vo = new UserVO();
-        vo.setId(id);
-        vo.setUsername("admin");
-        return vo;
-    }
 }

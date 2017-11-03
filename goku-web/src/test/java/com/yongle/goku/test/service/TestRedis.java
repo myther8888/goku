@@ -69,8 +69,5 @@ public class TestRedis extends JUnitServiceBase {
 
     @Test
     public void test() {
-        log.info(userService.getAbc("123"));
-
-        log.info(JSONObject.toJSONString(userService.getUser(100L)));
     }
 }

@@ -7,6 +7,7 @@
     <context id="DB2Tables" targetRuntime="MyBatis3" defaultModelType="flat">
         <!--model生成的时候自动可序列化-->
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
         <!--去除注释  -->
         <commentGenerator>
             <property name="suppressDate" value="true"/>

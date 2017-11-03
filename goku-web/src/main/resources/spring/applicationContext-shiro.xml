@@ -40,7 +40,7 @@
     <!--</value>-->
     <!--</property>-->
     <!--</bean>-->
-    <bean id="shiroFilter" class="com.yongle.goku.system.shiro.filter.ShiroPermissionFactory">
+    <bean id="shiroFilter" class="com.yongle.goku.system.shiro.ShiroPermissionFactory">
         <!-- Shiro的核心安全接口,这个属性是必须的 -->
         <property name="securityManager" ref="securityManager"/>
         <property name="menuService" ref="menuServiceImpl"/>
