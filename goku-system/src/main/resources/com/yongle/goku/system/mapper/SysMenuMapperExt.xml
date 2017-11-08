@@ -3,14 +3,14 @@
 <mapper namespace="com.yongle.goku.system.mapper.SysMenuMapperExt">
   <select id="findAllFunctionPoint" resultType="com.yongle.goku.model.system.SysMenu">
     SELECT
-      id, pid, name, url, type, action
+      <include refid="com.yongle.goku.system.mapper.SysMenuMapper.Base_Column_List"/>
     FROM
       sys_menu
     WHERE TYPE='3'
   </select>
   <select id="findByUserId" resultType="com.yongle.goku.model.system.SysMenu">
     SELECT
-      id, pid, name, url, type, action
+      <include refid="com.yongle.goku.system.mapper.SysMenuMapper.Base_Column_List"/>
     FROM
       sys_menu sm
       INNER JOIN sys_menu_role smr
@@ -21,7 +21,7 @@
   </select>
   <select id="findFunctionPointByUserId" resultType="com.yongle.goku.model.system.SysMenu">
     SELECT
-      id, pid, name, url, type, action
+      <include refid="com.yongle.goku.system.mapper.SysMenuMapper.Base_Column_List"/>
     FROM
       sys_menu sm
       INNER JOIN sys_menu_role smr

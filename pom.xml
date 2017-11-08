@@ -8,7 +8,6 @@
     <modules>
         <module>goku-base</module>
         <module>goku-system</module>
-        <module>goku-demo</module>
         <module>goku-web</module>
     </modules>
     <build>

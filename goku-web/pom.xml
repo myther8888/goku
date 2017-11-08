@@ -12,11 +12,13 @@
         <finalName>goku</finalName>
         <plugins>
             <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>maven-jetty-plugin</artifactId>
-                <version>6.1.26</version>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.4.7.v20170914</version>
                 <configuration>
-                    <webDefaultXml>src/main/resources/webdefault.xml</webDefaultXml>
+                    <webApp>
+                        <contextPath>/${project.artifactId}</contextPath>
+                    </webApp>
                 </configuration>
             </plugin>
             <plugin>
@@ -42,13 +44,8 @@
     <dependencies>
         <dependency>
             <groupId>com.yongle</groupId>
-            <artifactId>goku-demo</artifactId>
-            <version>${version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yongle</groupId>
             <artifactId>goku-system</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

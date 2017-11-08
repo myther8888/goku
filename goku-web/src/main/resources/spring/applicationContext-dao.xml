@@ -80,6 +80,11 @@
                 <bean class="com.yongle.dshelper.DynamicPlugin"/>
             </array>
         </property>
+        <property name="mapperLocations">
+            <array>
+                <value>classpath*:com/yongle/goku/*/mapper/*.xml</value>
+            </array>
+        </property>
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
