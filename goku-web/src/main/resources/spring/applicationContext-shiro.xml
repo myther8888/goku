@@ -18,6 +18,7 @@
         <property name="subjectDAO.sessionStorageEvaluator.sessionStorageEnabled" value="false"/>
         <property name="subjectFactory" ref="subjectFactory"/>
         <property name="sessionManager" ref="sessionManager"/>
+        <property name="cacheManager" ref="cacheManagerImpl"/>
     </bean>
 
     <!-- 相当于调用SecurityUtils.setSecurityManager(securityManager) -->

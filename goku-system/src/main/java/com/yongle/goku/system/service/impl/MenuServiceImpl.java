@@ -1,5 +1,6 @@
 package com.yongle.goku.system.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yongle.goku.base.service.impl.BaseServiceImpl;
 import com.yongle.goku.constant.ErrorEnum;
 import com.yongle.goku.model.system.SysMenu;
@@ -70,6 +71,7 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuVO> implements MenuServ
                         permissions.add(url + ":" + action);
                     }
                 }));
+        logger.info("用户：{}的所有权限：{}", userId, JSONObject.toJSONString(permissions));
         return permissions;
     }
 

@@ -4,15 +4,19 @@ import com.yongle.goku.base.service.impl.BaseServiceImpl;
 import com.yongle.goku.constant.ErrorEnum;
 import com.yongle.goku.model.system.SysMenuRole;
 import com.yongle.goku.model.system.SysMenuRoleExample;
+import com.yongle.goku.model.system.SysUserRole;
+import com.yongle.goku.model.system.SysUserRoleExample;
 import com.yongle.goku.model.vo.ResultVO;
 import com.yongle.goku.model.vo.system.UserVO;
 import com.yongle.goku.system.mapper.SysMenuRoleMapper;
+import com.yongle.goku.system.mapper.SysUserRoleMapper;
 import com.yongle.goku.system.service.RoleService;
-import com.yongle.goku.system.shiro.ShiroPermissionFactory;
+import com.yongle.goku.utils.redis.RedisUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,7 +30,7 @@ public class RoleServiceImpl extends BaseServiceImpl implements RoleService {
     private SysMenuRoleMapper menuRoleMapper;
 
     @Resource
-    private ShiroPermissionFactory shiroPermissionFactory;
+    private SysUserRoleMapper userRoleMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -41,8 +45,18 @@ public class RoleServiceImpl extends BaseServiceImpl implements RoleService {
             menuRole.setRoleId(id);
             menuRoles.add(menuRole);
         });
+        logger.info("重新分配角色：{}权限", id);
         menuRoles.forEach(menuRole -> menuRoleMapper.insert(menuRole));
-        shiroPermissionFactory.reloadFilterChains();
+
+        SysUserRoleExample userRoleExample = new SysUserRoleExample();
+        userRoleExample.createCriteria().andRoleIdEqualTo(id);
+        List<SysUserRole> userRoles = userRoleMapper.selectByExample(userRoleExample);
+
+        List<String> userAuthorizationKeys = new ArrayList<>(userRoles.size());
+        userRoles.forEach(userRole -> userAuthorizationKeys.add(
+                RedisUtils.RedisKey.getUserAuthorizationKey(userRole.getUserId())));
+        logger.info("清除角色：{}缓存权限", id);
+        redisUtils.del(userAuthorizationKeys);
         return new ResultVO(ErrorEnum.SUCCESS);
     }
 }

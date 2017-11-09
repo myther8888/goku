@@ -1,13 +1,12 @@
 package com.yongle.goku.utils.redis;
 
-import com.yongle.goku.utils.TextUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +55,10 @@ public class RedisUtils {
 
         public static String getPickBottleUsersKey() {
             return ("bottle:pick:users").toUpperCase();
+        }
+
+        public static String getUserAuthorizationKey(Long userId) {
+            return ("user:authorization:" + userId).toUpperCase();
         }
     }
 
@@ -171,17 +174,9 @@ public class RedisUtils {
      *
      * @param keys 支持多个key同时移除
      */
-    public void delKeys(String... keys) {
-        if (keys != null) {
-            List<String> listKey = new ArrayList<>();
-            for (String key : keys) {
-                if (TextUtils.isNotEmpty(key)) {
-                    listKey.add(key);
-                }
-            }
-            if (!listKey.isEmpty()) {
-                stringRedisTemplate.delete(listKey);
-            }
+    public void del(List<String> keys) {
+        if (CollectionUtils.isNotEmpty(keys)) {
+            stringRedisTemplate.delete(keys);
         }
     }
 

@@ -39,7 +39,6 @@
           class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
     <bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
         <property name="connectionFactory" ref="jedisConnectionFactory"/>
-        <property name="valueSerializer" ref="genericJackson2JsonRedisSerializer"/>
         <property name="hashValueSerializer" ref="genericJackson2JsonRedisSerializer"/>
     </bean>
 

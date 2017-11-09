@@ -48,4 +48,10 @@ public class TokenRealm extends AuthorizingRealm {
         UserVO userVO = EntityUtils.hashToObject(map, UserVO.class);
         return new SimpleAuthenticationInfo(userVO, tokenStr, getName());
     }
+
+    @Override
+    protected Object getAuthorizationCacheKey(PrincipalCollection principals) {
+        Long id = ((UserVO) principals.getPrimaryPrincipal()).getId();
+        return RedisUtils.RedisKey.getUserAuthorizationKey(id);
+    }
 }
