@@ -9,7 +9,6 @@ import com.yongle.goku.model.vo.system.MenuVO;
 import com.yongle.goku.model.vo.system.UserVO;
 import com.yongle.goku.system.mapper.SysMenuMapperExt;
 import com.yongle.goku.system.service.MenuService;
-import com.yongle.goku.system.shiro.ShiroPermissionFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,9 +25,6 @@ import java.util.Set;
 public class MenuServiceImpl extends BaseServiceImpl<MenuVO> implements MenuService {
     @Resource
     private SysMenuMapperExt menuMapperExt;
-
-    @Resource
-    private ShiroPermissionFactory shiroPermissionFactory;
 
     @Override
     public List<SysMenu> findAllFunctionPoint() {

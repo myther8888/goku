@@ -11,7 +11,9 @@ import com.yongle.goku.system.mapper.SysUserMapper;
 import com.yongle.goku.system.service.UserService;
 import com.yongle.goku.utils.EntityUtils;
 import com.yongle.goku.utils.redis.RedisUtils;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -45,6 +47,13 @@ public class UserServiceImpl extends BaseServiceImpl<UserVO> implements UserServ
         redisUtils.expire(RedisUtils.RedisKey.getTokenKey(tokenStr), 60 * 60, TimeUnit.SECONDS);
         resultVO.setData(userVO);
         return resultVO;
+    }
+
+    @Override
+    public ResultVO logout(UserVO userVO) {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return null;
     }
 
     private String getPassword(UserVO userVO) {

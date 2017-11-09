@@ -36,6 +36,11 @@ public class UserController extends BaseController {
         return userService.login(userVO);
     }
 
+    @PostMapping("/logout")
+    public ResultVO logout(HttpServletRequest request) {
+        return userService.logout(getCurrentUser(request));
+    }
+
     @GetMapping()
     public ResultVO findList(@RequestParam(name = "page_num", defaultValue = Constants.DEFAULT_PAGE_NUM) int pageNum,
                              @RequestParam(name = "page_size", defaultValue = Constants.DEFAULT_PAGE_SIZE) int pageSize,
