@@ -22,9 +22,9 @@ public class RoleController extends BaseController {
     @Resource
     private RoleService roleService;
 
-    @PostMapping("/role/{id}")
+    @PostMapping("/role/{id}/menus")
     public ResultVO assignOperationAuthority(@PathVariable("id") Long id,
-                                             @RequestBody List<Long> menuIds,
+                                             @RequestBody List<Integer> menuIds,
                                              HttpServletRequest request) {
         return roleService.assignOperationAuthority(id, menuIds, getCurrentUser(request));
     }

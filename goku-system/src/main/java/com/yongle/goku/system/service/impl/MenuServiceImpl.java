@@ -1,9 +1,14 @@
 package com.yongle.goku.system.service.impl;
 
 import com.yongle.goku.base.service.impl.BaseServiceImpl;
+import com.yongle.goku.constant.ErrorEnum;
 import com.yongle.goku.model.system.SysMenu;
+import com.yongle.goku.model.vo.ResultVO;
+import com.yongle.goku.model.vo.system.MenuVO;
+import com.yongle.goku.model.vo.system.UserVO;
 import com.yongle.goku.system.mapper.SysMenuMapperExt;
 import com.yongle.goku.system.service.MenuService;
+import com.yongle.goku.system.shiro.ShiroPermissionFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,12 +22,12 @@ import java.util.Set;
  * @author weinh
  */
 @Service
-public class MenuServiceImpl extends BaseServiceImpl implements MenuService {
-
-    private static final String[] ACTIONS = new String[]{"create", "read", "update", "delete"};
+public class MenuServiceImpl extends BaseServiceImpl<MenuVO> implements MenuService {
+    @Resource
+    private SysMenuMapperExt menuMapperExt;
 
     @Resource
-    SysMenuMapperExt menuMapperExt;
+    private ShiroPermissionFactory shiroPermissionFactory;
 
     @Override
     public List<SysMenu> findAllFunctionPoint() {
@@ -30,16 +35,11 @@ public class MenuServiceImpl extends BaseServiceImpl implements MenuService {
     }
 
     @Override
-    public List<SysMenu> findByUserId(Long userId) {
-        List<SysMenu> menus = menuMapperExt.findByUserId(userId);
-        return null;
-    }
-
-    @Override
     public Set<String> getPermission(Long userId) {
         List<SysMenu> allFunctionPoint = menuMapperExt.findAllFunctionPoint();
         Map<String, Map<String, Boolean>> allPermission = new HashMap<>(allFunctionPoint.size());
-        allFunctionPoint.forEach(menu -> {//将不需要权限的设置为true，将需要权限的设置为false
+        allFunctionPoint.forEach(menu -> {
+            //将不需要权限的设置为true，将需要权限的设置为false
             Map<String, Boolean> actionMap = allPermission.get(menu.getUrl());
             if (actionMap == null) {
                 actionMap = new HashMap<>(4);
@@ -55,7 +55,8 @@ public class MenuServiceImpl extends BaseServiceImpl implements MenuService {
         });
 
         List<SysMenu> functionPoints = menuMapperExt.findFunctionPointByUserId(userId);
-        functionPoints.forEach(menu -> {//将具有权限的设置为true
+        functionPoints.forEach(menu -> {
+            //将具有权限的设置为true
             Map<String, Boolean> actionMap = allPermission.get(menu.getUrl());
             actionMap.put(menu.getAction(), true);
             allPermission.put(menu.getUrl(), actionMap);
@@ -72,4 +73,23 @@ public class MenuServiceImpl extends BaseServiceImpl implements MenuService {
         return permissions;
     }
 
+    @Override
+    public ResultVO save(MenuVO menuVO, UserVO currentUser) {
+        return new ResultVO(ErrorEnum.SUCCESS);
+    }
+
+    @Override
+    public ResultVO update(Long id, MenuVO menuVO, UserVO currentUser) {
+        return new ResultVO(ErrorEnum.SUCCESS);
+    }
+
+    @Override
+    public ResultVO disabled(Long id, UserVO currentUser) {
+        return new ResultVO(ErrorEnum.SUCCESS);
+    }
+
+    @Override
+    public ResultVO enabled(Long id, UserVO currentUser) {
+        return new ResultVO(ErrorEnum.SUCCESS);
+    }
 }

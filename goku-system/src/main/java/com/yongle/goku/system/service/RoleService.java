@@ -18,5 +18,5 @@ public interface RoleService extends BaseService {
      * @param currentUser 操作者
      * @return 返回结果
      */
-    ResultVO assignOperationAuthority(Long id, List<Long> menuIds, UserVO currentUser);
+    ResultVO assignOperationAuthority(Long id, List<Integer> menuIds, UserVO currentUser);
 }

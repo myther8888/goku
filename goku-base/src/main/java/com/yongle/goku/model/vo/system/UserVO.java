@@ -1,7 +1,6 @@
 package com.yongle.goku.model.vo.system;
 
 import com.yongle.goku.model.system.SysUser;
-import com.yongle.goku.model.vo.Page;
 import org.springframework.beans.BeanUtils;
 
 import javax.validation.constraints.NotNull;
@@ -15,7 +14,6 @@ import javax.validation.constraints.NotNull;
 public class UserVO extends SysUser {
     private static final String[] IGNORE_PROPERTIES = {"password", "id"};
     private String token;
-    private Page page;
 
     public String getToken() {
         return token;
@@ -23,14 +21,6 @@ public class UserVO extends SysUser {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public Page getPage() {
-        return page;
-    }
-
-    public void setPage(Page page) {
-        this.page = page;
     }
 
     public SysUser convert2PO() {

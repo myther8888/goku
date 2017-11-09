@@ -1,6 +1,7 @@
 package com.yongle.goku.system.controller;
 
 import com.yongle.goku.base.controller.BaseController;
+import com.yongle.goku.constant.Constants;
 import com.yongle.goku.model.vo.Page;
 import com.yongle.goku.model.vo.ResultVO;
 import com.yongle.goku.model.vo.system.UserVO;
@@ -36,13 +37,12 @@ public class UserController extends BaseController {
     }
 
     @GetMapping()
-    public ResultVO findAll(@RequestParam(name = "page_num", defaultValue = "1") int pageNum,
-                            @RequestParam(name = "page_size", defaultValue = "10") int pageSize,
-                            HttpServletRequest request) {
+    public ResultVO findList(@RequestParam(name = "page_num", defaultValue = Constants.DEFAULT_PAGE_NUM) int pageNum,
+                             @RequestParam(name = "page_size", defaultValue = Constants.DEFAULT_PAGE_SIZE) int pageSize,
+                             HttpServletRequest request) {
         UserVO userVO = new UserVO();
         Page page = new Page(pageNum, pageSize);
-        userVO.setPage(page);
-        return userService.findAll(userVO, getCurrentUser(request));
+        return userService.findList(userVO, page, getCurrentUser(request));
     }
 
     @GetMapping("/user/{id}")
@@ -63,9 +63,9 @@ public class UserController extends BaseController {
     }
 
     @DeleteMapping("/user/{id}")
-    public ResultVO delete(@PathVariable(name = "id") Long id,
-                           HttpServletRequest request) {
-        return userService.delete(id, getCurrentUser(request));
+    public ResultVO disabled(@PathVariable(name = "id") Long id,
+                             HttpServletRequest request) {
+        return userService.disabled(id, getCurrentUser(request));
     }
 
     @PostMapping("/user")

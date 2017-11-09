@@ -28,4 +28,8 @@ public class Constants {
 
     public static final String PASSWORD_SALT = "YONGLE";
     public static final String CURRENT_USER = "CURRENT_USER";
+
+
+    public static final String DEFAULT_PAGE_NUM = "1";
+    public static final String DEFAULT_PAGE_SIZE = "20";
 }

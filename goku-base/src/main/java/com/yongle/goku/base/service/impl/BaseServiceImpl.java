@@ -1,6 +1,7 @@
 package com.yongle.goku.base.service.impl;
 
 import com.yongle.goku.base.service.BaseService;
+import com.yongle.goku.model.vo.Page;
 import com.yongle.goku.model.vo.ResultVO;
 import com.yongle.goku.model.vo.system.UserVO;
 import com.yongle.goku.utils.redis.RedisUtils;
@@ -31,12 +32,12 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
-    public ResultVO delete(Long id, UserVO currentUser) {
+    public ResultVO findOne(Long id, UserVO currentUser) {
         return null;
     }
 
     @Override
-    public ResultVO findOne(Long id, UserVO currentUser) {
+    public ResultVO findList(T t, Page page, UserVO currentUser) {
         return null;
     }
 
@@ -46,7 +47,12 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
-    public ResultVO recover(Long id, UserVO currentUser) {
+    public ResultVO disabled(Long id, UserVO currentUser) {
+        return null;
+    }
+
+    @Override
+    public ResultVO enabled(Long id, UserVO currentUser) {
         return null;
     }
 }

@@ -76,6 +76,7 @@ public class ShiroPermissionFactory extends ShiroFilterFactoryBean {
                     manager.createChain(url, definitionChains.trim().replace(" ", ""));
                 });
             }
+            logger.info("重新加载拦截器链：{}", JSONObject.toJSONString(manager.getFilterChains()));
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }

@@ -1,5 +1,6 @@
 package com.yongle.goku.base.service;
 
+import com.yongle.goku.model.vo.Page;
 import com.yongle.goku.model.vo.ResultVO;
 import com.yongle.goku.model.vo.system.UserVO;
 
@@ -14,11 +15,13 @@ public interface BaseService<T> {
 
     ResultVO update(Long id, T t, UserVO currentUser);
 
-    ResultVO delete(Long id, UserVO currentUser);
-
     ResultVO findOne(Long id, UserVO currentUser);
+
+    ResultVO findList(T t, Page page, UserVO currentUser);
 
     ResultVO findAll(T t, UserVO currentUser);
 
-    ResultVO recover(Long id, UserVO currentUser);
+    ResultVO disabled(Long id, UserVO currentUser);
+
+    ResultVO enabled(Long id, UserVO currentUser);
 }
