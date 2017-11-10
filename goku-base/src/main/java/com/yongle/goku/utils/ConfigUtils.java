@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Properties;
 
 /**
- * Created by weinh on 2016/5/5.
+ * @author weinh
  */
 public class ConfigUtils {
 

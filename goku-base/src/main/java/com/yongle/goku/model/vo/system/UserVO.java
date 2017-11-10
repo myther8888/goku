@@ -6,10 +6,7 @@ import org.springframework.beans.BeanUtils;
 import javax.validation.constraints.NotNull;
 
 /**
- * 类 名 称：UserVO.java
- * 功能说明：
- * 开发人员：weinh
- * 开发时间：2017年10月13日
+ * @author weinh
  */
 public class UserVO extends SysUser {
     private static final String[] IGNORE_PROPERTIES = {"password"};

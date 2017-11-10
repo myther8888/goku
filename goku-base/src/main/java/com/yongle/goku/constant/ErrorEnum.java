@@ -1,7 +1,7 @@
 package com.yongle.goku.constant;
 
 /**
- * Created by weinh on 2017/2/9.
+ * @author weinh
  */
 public enum ErrorEnum {
     //系统相关

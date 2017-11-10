@@ -67,7 +67,7 @@ public class RedisUtils {
     }
 
     @Resource
-    private RedisTemplate<String, Object> stringRedisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 自增
@@ -76,19 +76,19 @@ public class RedisUtils {
      * @param value 步长
      * @return
      */
-    public Long increment(String key, Long value) {
+    public Long increment(String key, long value) {
         if (key != null) {
-            return stringRedisTemplate.opsForValue().increment(key, value);
+            return redisTemplate.opsForValue().increment(key, value);
         }
         return null;
     }
 
     public void hMSet(String key, Map<String, Object> map) {
-        stringRedisTemplate.opsForHash().putAll(key, map);
+        redisTemplate.opsForHash().putAll(key, map);
     }
 
     public Map<Object, Object> hGetAll(String key) {
-        return stringRedisTemplate.opsForHash().entries(key);
+        return redisTemplate.opsForHash().entries(key);
     }
 
     /**
@@ -99,7 +99,7 @@ public class RedisUtils {
      */
     public Object get(String key) {
         if (key != null) {
-            return stringRedisTemplate.opsForValue().get(key);
+            return redisTemplate.opsForValue().get(key);
         }
         return null;
     }
@@ -115,9 +115,9 @@ public class RedisUtils {
     public void set(String key, Object value, Long timeout, TimeUnit unit) {
         if (key != null) {
             if (timeout != null && unit != null) {
-                stringRedisTemplate.opsForValue().set(key, value, timeout, unit);
+                redisTemplate.opsForValue().set(key, value, timeout, unit);
             } else {
-                stringRedisTemplate.opsForValue().set(key, value);
+                redisTemplate.opsForValue().set(key, value);
             }
 
         }
@@ -131,7 +131,7 @@ public class RedisUtils {
      */
     public void add(String key, String value) {
         if (key != null) {
-            stringRedisTemplate.opsForSet().add(key, value);
+            redisTemplate.opsForSet().add(key, value);
         }
     }
 
@@ -143,7 +143,7 @@ public class RedisUtils {
      */
     public Object randMember(String key) {
         if (key != null) {
-            return stringRedisTemplate.opsForSet().randomMember(key);
+            return redisTemplate.opsForSet().randomMember(key);
         }
         return null;
     }
@@ -154,9 +154,9 @@ public class RedisUtils {
      * @param key    key
      * @param values 支持多个值同时移除
      */
-    public void remove(String key, String[] values) {
+    public void remove(String key, Object[] values) {
         if (key != null) {
-            stringRedisTemplate.opsForSet().remove(key, values);
+            redisTemplate.opsForSet().remove(key, values);
         }
     }
 
@@ -168,7 +168,7 @@ public class RedisUtils {
      */
     public Set<Object> members(String key) {
         if (key != null) {
-            return stringRedisTemplate.opsForSet().members(key);
+            return redisTemplate.opsForSet().members(key);
         }
         return null;
     }
@@ -180,12 +180,12 @@ public class RedisUtils {
      */
     public void del(List<String> keys) {
         if (CollectionUtils.isNotEmpty(keys)) {
-            stringRedisTemplate.delete(keys);
+            redisTemplate.delete(keys);
         }
     }
 
     public void del(String key) {
-        stringRedisTemplate.delete(key);
+        redisTemplate.delete(key);
     }
 
     /**
@@ -196,9 +196,9 @@ public class RedisUtils {
      * @param unit    过期时间单位
      * @return
      */
-    public Boolean expire(String key, final long timeout, final TimeUnit unit) {
+    public Boolean expire(String key, final Long timeout, final TimeUnit unit) {
         if (key != null) {
-            return stringRedisTemplate.expire(key, timeout, unit);
+            return redisTemplate.expire(key, timeout, unit);
         }
         return false;
     }
@@ -212,7 +212,7 @@ public class RedisUtils {
      */
     public Boolean expireAt(String key, final Date date) {
         if (key != null) {
-            return stringRedisTemplate.expireAt(key, date);
+            return redisTemplate.expireAt(key, date);
         }
         return false;
     }
@@ -226,7 +226,7 @@ public class RedisUtils {
      */
     public void add(String key, String value, Double score) {
         if (key != null) {
-            stringRedisTemplate.opsForZSet().add(key, value, score);
+            redisTemplate.opsForZSet().add(key, value, score);
         }
     }
 
@@ -239,7 +239,7 @@ public class RedisUtils {
      */
     public void removeRangeByScore(String key, Double min, Double max) {
         if (key != null) {
-            stringRedisTemplate.opsForZSet().removeRangeByScore(key, min, max);
+            redisTemplate.opsForZSet().removeRangeByScore(key, min, max);
         }
     }
 
@@ -252,7 +252,7 @@ public class RedisUtils {
      */
     public Long rank(String key, String value) {
         if (key != null) {
-            return stringRedisTemplate.opsForZSet().rank(key, value);
+            return redisTemplate.opsForZSet().rank(key, value);
         }
         return null;
     }
@@ -265,7 +265,7 @@ public class RedisUtils {
      * @return 列表长度
      */
     public Long leftPush(String key, String value) {
-        return stringRedisTemplate.opsForList().leftPush(key, value);
+        return redisTemplate.opsForList().leftPush(key, value);
     }
 
     /**
@@ -275,6 +275,6 @@ public class RedisUtils {
      * @return 被移除内容
      */
     public Object rightPop(String key) {
-        return stringRedisTemplate.opsForList().rightPop(key);
+        return redisTemplate.opsForList().rightPop(key);
     }
 }

@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.yongle.goku.constant.Constants;
 import com.yongle.goku.constant.ErrorEnum;
 import com.yongle.goku.model.vo.ResultVO;
-import com.yongle.goku.utils.security.MD5;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,7 @@ import java.util.Set;
 
 
 /**
- * Created by weinh on 2016/11/20.
+ * @author weinh
  */
 public class SignatureInterceptor {
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -56,11 +56,13 @@ public class SignatureInterceptor {
             if (jsonObject.isEmpty()) {
                 log.warn("提交参数为空，请检查");
             }
-            if (request.getHeader(Constants.TIMESTAMP) == null) {//时间撮不存在或为空
+            if (request.getHeader(Constants.TIMESTAMP) == null) {
+                //时间撮不存在或为空
                 return new ResultVO(ErrorEnum.TIMESTAMP_EMPTY);
             } else if (Math.abs(System.currentTimeMillis() -
                     Long.parseLong(request.getHeader(Constants.TIMESTAMP)))
-                    > Constants.DEVIATION_TIME) {//时间撮和当前时间相差10分钟以上
+                    > Constants.DEVIATION_TIME) {
+                //时间撮和当前时间相差10分钟以上
                 return new ResultVO(ErrorEnum.TIMESTAMP_ERROR);
             }
             Enumeration headerNames = request.getHeaderNames();
@@ -89,13 +91,15 @@ public class SignatureInterceptor {
             }
         }
 
-        String array[] = list.toArray(new String[]{});
-        Arrays.sort(array);//字典序排序
+        String[] array = list.toArray(new String[]{});
+        //字典序排序
+        Arrays.sort(array);
         StringBuilder sb = new StringBuilder();
-        for (String string : array) {//key1value1key2value2...串起来
+        for (String string : array) {
+            //key1value1key2value2...串起来
             sb.append(string);
         }
-        return MD5.GetMD5Code(sb.toString());
+        return new Md5Hash(sb.toString()).toString();
     }
 
     private String getReqType(ProceedingJoinPoint pjp) throws Exception {

@@ -5,10 +5,7 @@ import com.github.pagehelper.PageInfo;
 import java.util.List;
 
 /**
- * 类 名 称：Page.java
- * 功能说明：
- * 开发人员：weinh
- * 开发时间：2017年09月20日
+ * @author weinh
  */
 public class Page<T> {
     private long total;

@@ -7,4 +7,5 @@ spring mvc
 mybatis
 druid
 redis
+shiro
 ```

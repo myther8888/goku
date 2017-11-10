@@ -3,7 +3,7 @@ package com.yongle.goku.model.vo;
 import com.yongle.goku.constant.ErrorEnum;
 
 /**
- * Created by weinh on 2016/5/5.
+ * @author weinh
  */
 public class ResultVO<T> {
     private Integer errorCode;

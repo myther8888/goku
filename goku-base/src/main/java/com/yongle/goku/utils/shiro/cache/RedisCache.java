@@ -13,18 +13,13 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author weinh
  */
 public class RedisCache<K, V> implements Cache<K, V> {
-    private final Logger logger = LoggerFactory.getLogger(getClass());
     private static RedisUtils redisUtils;
-    private String prefix;
-
-    public RedisCache(String prefix) {
-        this.prefix = prefix;
-    }
 
     public RedisUtils getRedisUtils() {
         if (redisUtils == null) {
@@ -35,13 +30,16 @@ public class RedisCache<K, V> implements Cache<K, V> {
 
     private String getKey(K k) {
         if (k instanceof PrincipalCollection) {
+            //这种情况是权限检查
             Long id = ((UserVO) ((PrincipalCollection) k).getPrimaryPrincipal()).getId();
             return RedisUtils.RedisKey.getUserAuthorizationKey(id);
         }
         if (k instanceof String) {
+            //这种情况是登录的token
             return RedisUtils.RedisKey.getUserAuthenticationKey((String) k);
         }
         if (k instanceof UserVO) {
+            //这种情况是登出的用户实例
             return RedisUtils.RedisKey.getUserAuthenticationKey(((UserVO) k).getToken());
         }
         return null;
@@ -49,25 +47,16 @@ public class RedisCache<K, V> implements Cache<K, V> {
 
     @Override
     public V get(K k) throws CacheException {
-        return (V) getRedisUtils().get(getKey(k));
-//        Map<Object, Object> map = getRedisUtils().hGetAll(getKey(k));
-//        return EntityUtils.hashToObject(map, getType(k));
-    }
-
-    private Class getType(K k) {
-        if (k instanceof PrincipalCollection) {
-            return SimpleAuthorizationInfo.class;
+        V v = (V) getRedisUtils().get(getKey(k));
+        if (v != null) {
+            getRedisUtils().expire(getKey(k), 1L, TimeUnit.DAYS);
         }
-        if (k instanceof String) {
-            return SimpleAuthenticationInfo.class;
-        }
-        return null;
+        return v;
     }
 
     @Override
     public V put(K k, V v) throws CacheException {
-//        getRedisUtils().hMSet(getKey(k), EntityUtils.objectToHash(v));
-        getRedisUtils().set(getKey(k), v, null, null);
+        getRedisUtils().set(getKey(k), v, 1L, TimeUnit.DAYS);
         return v;
     }
 

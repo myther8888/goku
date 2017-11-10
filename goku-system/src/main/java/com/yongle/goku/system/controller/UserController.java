@@ -36,7 +36,7 @@ public class UserController extends BaseController {
         return userService.login(userVO);
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public ResultVO logout(HttpServletRequest request) {
         return userService.logout(getCurrentUser(request));
     }

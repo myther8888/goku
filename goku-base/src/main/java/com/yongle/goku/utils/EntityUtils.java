@@ -21,16 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 系统名称：U-OBS-MONITOR
- * 系统版本：V5.0.1
- * 模块名称：监控模块
- * 类 名 称：EntityUtils.java
- * 功能说明：
- * 开发人员：weinh
- * 开发时间：2017年03月13日
- * 审核人员：
- * 相关文档：
- * 修改记录：修改日期 修改人员 修改说明
+ * @author weinh
  */
 public class EntityUtils {
     static {
@@ -49,7 +40,7 @@ public class EntityUtils {
             BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
             PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
             for (PropertyDescriptor property : propertyDescriptors) {
-                if (!property.getName().equals("class")) {
+                if (!"class".equals(property.getName())) {
                     Method method = property.getReadMethod();
                     if (method != null) {
                         Object value = method.invoke(obj);

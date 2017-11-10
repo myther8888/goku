@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author weinh
+ */
 @RestController
 public class BaseController {
     final Logger log = LoggerFactory.getLogger(getClass());
@@ -27,7 +30,7 @@ public class BaseController {
     public ResultVO exception(Exception e) {
         log.error(e.getMessage(), e);
         ResultVO vo = new ResultVO(ErrorEnum.ERROR);
-        if (ConfigUtils.getProperty("debug").equals("true")) {
+        if ("true".equals(ConfigUtils.getProperty("debug"))) {
             vo.setDescription(e.getLocalizedMessage());
         }
         return vo;

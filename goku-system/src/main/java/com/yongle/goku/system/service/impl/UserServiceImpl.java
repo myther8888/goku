@@ -43,7 +43,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserVO> implements UserServ
         userVO.convert2VO(users.get(0));
         userVO.setToken(tokenStr);
         redisUtils.hMSet(RedisUtils.RedisKey.getUserTokenKey(tokenStr), EntityUtils.objectToHash(userVO));
-        redisUtils.expire(RedisUtils.RedisKey.getUserTokenKey(tokenStr), 60 * 60, TimeUnit.SECONDS);
+        redisUtils.expire(RedisUtils.RedisKey.getUserTokenKey(tokenStr), 1L, TimeUnit.DAYS);
 
         ResultVO<UserVO> resultVO = new ResultVO<>(ErrorEnum.SUCCESS);
         resultVO.setData(userVO);
@@ -55,7 +55,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserVO> implements UserServ
         Subject subject = SecurityUtils.getSubject();
         redisUtils.del(RedisUtils.RedisKey.getUserTokenKey(userVO.getToken()));
         subject.logout();
-        return null;
+        return new ResultVO(ErrorEnum.SUCCESS);
     }
 
     private String getPassword(UserVO userVO) {

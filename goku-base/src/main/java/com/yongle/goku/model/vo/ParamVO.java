@@ -1,7 +1,7 @@
 package com.yongle.goku.model.vo;
 
 /**
- * Created by weinh on 2016/12/26.
+ * @author weinh
  */
 public class ParamVO {
     private Long timestamp;

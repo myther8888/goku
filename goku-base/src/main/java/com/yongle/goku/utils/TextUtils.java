@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by yongl on 2016/5/8.
+ * @author weinh
  */
 public class TextUtils extends StringUtils {
     private static final Logger log = LoggerFactory.getLogger(TextUtils.class);

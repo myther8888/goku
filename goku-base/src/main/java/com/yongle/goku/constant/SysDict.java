@@ -1,7 +1,7 @@
 package com.yongle.goku.constant;
 
 /**
- * Created by weinh on 2016/5/8.
+ * @author weinh
  */
 public class SysDict {
     public enum Sex {
@@ -71,7 +71,7 @@ public class SysDict {
         }
 
         public static boolean isBottleType(String b) {
-            BottleType allBottleType[] = BottleType.values();
+            BottleType[] allBottleType = BottleType.values();
             for (BottleType bottleType : allBottleType) {
                 if (bottleType.value.equals(b)) {
                     return true;

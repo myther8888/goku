@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
 
 /**
- * Created by weinh on 2016/5/25.
+ * @author weinh
  */
 public class AllInterceptor implements HandlerInterceptor {
 
@@ -40,6 +40,6 @@ public class AllInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
                                 Exception ex) throws Exception {
         log.info("{}接口请求时长time：{}ms", request.getServletPath(), System.currentTimeMillis() - time.get());
-        time.set(null);
+        time.remove();
     }
 }

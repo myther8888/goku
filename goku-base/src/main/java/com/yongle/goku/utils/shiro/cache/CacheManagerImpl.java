@@ -13,6 +13,6 @@ public class CacheManagerImpl extends AbstractCacheManager {
 
     @Override
     protected Cache createCache(String s) throws CacheException {
-        return new RedisCache(s);
+        return new RedisCache();
     }
 }

@@ -6,6 +6,9 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
 import java.util.Properties;
 
+/**
+ * @author weinh
+ */
 public class PropertyPlaceholderConfigurerEX extends PropertyPlaceholderConfigurer {
 
     private static final String KEY = "KWKdMIgFriwOkygqRlPUdQ==";
@@ -20,7 +23,7 @@ public class PropertyPlaceholderConfigurerEX extends PropertyPlaceholderConfigur
     @Override
     protected String resolvePlaceholder(String placeholder, Properties props) {
         String placeholderValue = props.getProperty(placeholder);
-        if (this.secutiry && placeholder.equals("jdbc.password")) {
+        if (this.secutiry && "jdbc.password".equals(placeholder)) {
             log.debug("解密的属性：{}", placeholder);
             log.debug("解密前的字符串：{}", placeholderValue);
             try {
