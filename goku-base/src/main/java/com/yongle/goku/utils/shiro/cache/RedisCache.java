@@ -1,7 +1,6 @@
 package com.yongle.goku.utils.shiro.cache;
 
 import com.yongle.goku.model.vo.system.UserVO;
-import com.yongle.goku.utils.EntityUtils;
 import com.yongle.goku.utils.SpringUtils;
 import com.yongle.goku.utils.redis.RedisUtils;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
@@ -13,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -51,8 +49,9 @@ public class RedisCache<K, V> implements Cache<K, V> {
 
     @Override
     public V get(K k) throws CacheException {
-        Map<Object, Object> map = getRedisUtils().hGetAll(getKey(k));
-        return EntityUtils.hashToObject(map, getType(k));
+        return (V) getRedisUtils().get(getKey(k));
+//        Map<Object, Object> map = getRedisUtils().hGetAll(getKey(k));
+//        return EntityUtils.hashToObject(map, getType(k));
     }
 
     private Class getType(K k) {
@@ -67,7 +66,8 @@ public class RedisCache<K, V> implements Cache<K, V> {
 
     @Override
     public V put(K k, V v) throws CacheException {
-        getRedisUtils().hMSet(getKey(k), EntityUtils.objectToHash(v));
+//        getRedisUtils().hMSet(getKey(k), EntityUtils.objectToHash(v));
+        getRedisUtils().set(getKey(k), v, null, null);
         return v;
     }
 

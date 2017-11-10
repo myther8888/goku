@@ -3,7 +3,7 @@ package com.yongle.goku.utils.redis;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -67,7 +67,7 @@ public class RedisUtils {
     }
 
     @Resource
-    private StringRedisTemplate stringRedisTemplate;
+    private RedisTemplate<String, Object> stringRedisTemplate;
 
     /**
      * 自增
@@ -97,7 +97,7 @@ public class RedisUtils {
      * @param key key
      * @return
      */
-    public String get(String key) {
+    public Object get(String key) {
         if (key != null) {
             return stringRedisTemplate.opsForValue().get(key);
         }
@@ -112,7 +112,7 @@ public class RedisUtils {
      * @param timeout 过期时间
      * @param unit    过期时间单位
      */
-    public void set(String key, String value, Long timeout, TimeUnit unit) {
+    public void set(String key, Object value, Long timeout, TimeUnit unit) {
         if (key != null) {
             if (timeout != null && unit != null) {
                 stringRedisTemplate.opsForValue().set(key, value, timeout, unit);
@@ -141,7 +141,7 @@ public class RedisUtils {
      * @param key key
      * @return
      */
-    public String randMember(String key) {
+    public Object randMember(String key) {
         if (key != null) {
             return stringRedisTemplate.opsForSet().randomMember(key);
         }
@@ -166,7 +166,7 @@ public class RedisUtils {
      * @param key key前缀
      * @return 成员集合
      */
-    public Set<String> members(String key) {
+    public Set<Object> members(String key) {
         if (key != null) {
             return stringRedisTemplate.opsForSet().members(key);
         }
@@ -274,7 +274,7 @@ public class RedisUtils {
      * @param key key
      * @return 被移除内容
      */
-    public String rightPop(String key) {
+    public Object rightPop(String key) {
         return stringRedisTemplate.opsForList().rightPop(key);
     }
 }
