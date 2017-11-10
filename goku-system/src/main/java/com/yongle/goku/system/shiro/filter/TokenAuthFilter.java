@@ -5,12 +5,14 @@ import com.yongle.goku.constant.Constants;
 import com.yongle.goku.constant.ErrorEnum;
 import com.yongle.goku.model.vo.ResultVO;
 import com.yongle.goku.model.vo.system.UserVO;
+import com.yongle.goku.utils.redis.RedisUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.io.IOException;
@@ -20,6 +22,10 @@ import java.io.IOException;
  */
 @Component
 public class TokenAuthFilter extends AccessControlFilter {
+
+    @Resource
+    private RedisUtils redisUtils;
+
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
         return false;
@@ -33,7 +39,7 @@ public class TokenAuthFilter extends AccessControlFilter {
             onAuthFail(response, ErrorEnum.ERROR_PARAM);
             return false;
         }
-        UsernamePasswordToken token = new UsernamePasswordToken("", tokenStr, null);
+        UsernamePasswordToken token = new UsernamePasswordToken(tokenStr, tokenStr, null);
         try {
             getSubject(request, response).login(token);
             UserVO userVO = (UserVO) getSubject(request, response).getPrincipal();

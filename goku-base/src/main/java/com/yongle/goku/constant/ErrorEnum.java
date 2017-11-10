@@ -7,6 +7,7 @@ public enum ErrorEnum {
     //系统相关
     SUCCESS(0, "成功"),
     ERROR(-1, "未知错误"),
+    ERROR_LOGIN(-2, "用户名或者密码错误"),
     SIGNATURE_ERROR(-10, "签名错误"),
     TIMESTAMP_ERROR(-11, "时间戳错误"),
     TIMESTAMP_EMPTY(-12, "时间戳不能为空"),

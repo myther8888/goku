@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  * 开发时间：2017年10月13日
  */
 public class UserVO extends SysUser {
-    private static final String[] IGNORE_PROPERTIES = {"password", "id"};
+    private static final String[] IGNORE_PROPERTIES = {"password"};
     private String token;
 
     public String getToken() {

@@ -1,16 +1,17 @@
 package com.yongle.goku.utils.shiro.cache;
 
+import com.yongle.goku.model.vo.system.UserVO;
 import com.yongle.goku.utils.EntityUtils;
+import com.yongle.goku.utils.SpringUtils;
 import com.yongle.goku.utils.redis.RedisUtils;
-import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -18,33 +19,61 @@ import java.util.Set;
 /**
  * @author weinh
  */
-@Component
-public class RedisCache implements Cache<String, Object> {
+public class RedisCache<K, V> implements Cache<K, V> {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    @Resource
-    private RedisUtils redisUtils;
+    private static RedisUtils redisUtils;
+    private String prefix;
 
-    @Override
-    public Object get(String s) throws CacheException {
-        Map<Object, Object> map = redisUtils.hGetAll(s);
+    public RedisCache(String prefix) {
+        this.prefix = prefix;
+    }
 
-        AuthorizationInfo authorizationInfo = null;
-        try {
-            authorizationInfo = EntityUtils.hashToObject(map, SimpleAuthorizationInfo.class);
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+    public RedisUtils getRedisUtils() {
+        if (redisUtils == null) {
+            redisUtils = SpringUtils.getBean(RedisUtils.class);
         }
-        return authorizationInfo;
+        return redisUtils;
+    }
+
+    private String getKey(K k) {
+        if (k instanceof PrincipalCollection) {
+            Long id = ((UserVO) ((PrincipalCollection) k).getPrimaryPrincipal()).getId();
+            return RedisUtils.RedisKey.getUserAuthorizationKey(id);
+        }
+        if (k instanceof String) {
+            return RedisUtils.RedisKey.getUserAuthenticationKey((String) k);
+        }
+        if (k instanceof UserVO) {
+            return RedisUtils.RedisKey.getUserAuthenticationKey(((UserVO) k).getToken());
+        }
+        return null;
     }
 
     @Override
-    public Object put(String s, Object o) throws CacheException {
-        redisUtils.hMSet(s, EntityUtils.objectToHash(o));
-        return o;
+    public V get(K k) throws CacheException {
+        Map<Object, Object> map = getRedisUtils().hGetAll(getKey(k));
+        return EntityUtils.hashToObject(map, getType(k));
+    }
+
+    private Class getType(K k) {
+        if (k instanceof PrincipalCollection) {
+            return SimpleAuthorizationInfo.class;
+        }
+        if (k instanceof String) {
+            return SimpleAuthenticationInfo.class;
+        }
+        return null;
     }
 
     @Override
-    public Object remove(String s) throws CacheException {
+    public V put(K k, V v) throws CacheException {
+        getRedisUtils().hMSet(getKey(k), EntityUtils.objectToHash(v));
+        return v;
+    }
+
+    @Override
+    public V remove(K k) throws CacheException {
+        getRedisUtils().del(getKey(k));
         return null;
     }
 
@@ -59,12 +88,14 @@ public class RedisCache implements Cache<String, Object> {
     }
 
     @Override
-    public Set<String> keys() {
+    public Set<K> keys() {
         return null;
     }
 
     @Override
-    public Collection<Object> values() {
+    public Collection<V> values() {
         return null;
     }
+
+
 }

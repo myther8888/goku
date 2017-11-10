@@ -22,13 +22,16 @@ import java.util.Map;
  * @author weinh
  */
 @Component
-public class TokenRealm extends AuthorizingRealm {
+public class PermissionRealm extends AuthorizingRealm {
+    @Resource
+    private MenuService menuService;
 
     @Resource
     private RedisUtils redisUtils;
 
-    @Resource
-    private MenuService menuService;
+    public PermissionRealm() {
+        super.setAuthenticationCachingEnabled(true);
+    }
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -39,19 +42,14 @@ public class TokenRealm extends AuthorizingRealm {
     }
 
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
+            throws AuthenticationException {
         String tokenStr = new String((char[]) token.getCredentials());
-        Map<Object, Object> map = redisUtils.hGetAll(RedisUtils.RedisKey.getTokenKey(tokenStr));
+        Map<Object, Object> map = redisUtils.hGetAll(RedisUtils.RedisKey.getUserTokenKey(tokenStr));
         if (MapUtils.isEmpty(map)) {
             return null;
         }
         UserVO userVO = EntityUtils.hashToObject(map, UserVO.class);
         return new SimpleAuthenticationInfo(userVO, tokenStr, getName());
-    }
-
-    @Override
-    protected Object getAuthorizationCacheKey(PrincipalCollection principals) {
-        Long id = ((UserVO) principals.getPrimaryPrincipal()).getId();
-        return RedisUtils.RedisKey.getUserAuthorizationKey(id);
     }
 }

@@ -25,10 +25,6 @@ public class RedisUtils {
             return ("loginRepeat:" + source).toUpperCase();
         }
 
-        public static String getTokenKey(String token) {
-            return ("token:" + token).toUpperCase();
-        }
-
         public static String getUserTokensKey(Long userId) {
             return ("tokens:" + userId).toUpperCase();
         }
@@ -59,6 +55,14 @@ public class RedisUtils {
 
         public static String getUserAuthorizationKey(Long userId) {
             return ("user:authorization:" + userId).toUpperCase();
+        }
+
+        public static String getUserTokenKey(String token) {
+            return ("user:token:" + token).toUpperCase();
+        }
+
+        public static String getUserAuthenticationKey(String token) {
+            return ("user:authentication:" + token).toUpperCase();
         }
     }
 
@@ -178,6 +182,10 @@ public class RedisUtils {
         if (CollectionUtils.isNotEmpty(keys)) {
             stringRedisTemplate.delete(keys);
         }
+    }
+
+    public void del(String key) {
+        stringRedisTemplate.delete(key);
     }
 
     /**

@@ -14,7 +14,7 @@
 
     <!-- 安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="tokenRealm"/>
+        <property name="realm" ref="permissionRealm"/>
         <property name="subjectDAO.sessionStorageEvaluator.sessionStorageEnabled" value="false"/>
         <property name="subjectFactory" ref="subjectFactory"/>
         <property name="sessionManager" ref="sessionManager"/>

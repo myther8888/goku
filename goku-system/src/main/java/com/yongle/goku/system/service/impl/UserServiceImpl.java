@@ -1,7 +1,6 @@
 package com.yongle.goku.system.service.impl;
 
 import com.yongle.goku.base.service.impl.BaseServiceImpl;
-import com.yongle.goku.constant.Constants;
 import com.yongle.goku.constant.ErrorEnum;
 import com.yongle.goku.model.system.SysUser;
 import com.yongle.goku.model.system.SysUserExample;
@@ -11,11 +10,11 @@ import com.yongle.goku.system.mapper.SysUserMapper;
 import com.yongle.goku.system.service.UserService;
 import com.yongle.goku.utils.EntityUtils;
 import com.yongle.goku.utils.redis.RedisUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -40,11 +39,13 @@ public class UserServiceImpl extends BaseServiceImpl<UserVO> implements UserServ
             return new ResultVO(ErrorEnum.LOGIN_ERROR);
         }
         String tokenStr = UUID.randomUUID().toString();
-        ResultVO<UserVO> resultVO = new ResultVO<>(ErrorEnum.SUCCESS);
+        userVO = new UserVO();
         userVO.convert2VO(users.get(0));
         userVO.setToken(tokenStr);
-        redisUtils.hMSet(RedisUtils.RedisKey.getTokenKey(tokenStr), EntityUtils.objectToHash(users.get(0)));
-        redisUtils.expire(RedisUtils.RedisKey.getTokenKey(tokenStr), 60 * 60, TimeUnit.SECONDS);
+        redisUtils.hMSet(RedisUtils.RedisKey.getUserTokenKey(tokenStr), EntityUtils.objectToHash(userVO));
+        redisUtils.expire(RedisUtils.RedisKey.getUserTokenKey(tokenStr), 60 * 60, TimeUnit.SECONDS);
+
+        ResultVO<UserVO> resultVO = new ResultVO<>(ErrorEnum.SUCCESS);
         resultVO.setData(userVO);
         return resultVO;
     }
@@ -52,12 +53,13 @@ public class UserServiceImpl extends BaseServiceImpl<UserVO> implements UserServ
     @Override
     public ResultVO logout(UserVO userVO) {
         Subject subject = SecurityUtils.getSubject();
+        redisUtils.del(RedisUtils.RedisKey.getUserTokenKey(userVO.getToken()));
         subject.logout();
         return null;
     }
 
     private String getPassword(UserVO userVO) {
-        Md5Hash md5Hash = new Md5Hash(userVO.getUsername() + userVO.getPassword(), Constants.PASSWORD_SALT);
+        Md5Hash md5Hash = new Md5Hash(userVO.getPassword(), new Md5Hash(userVO.getUsername()));
         return md5Hash.toString();
     }
 
