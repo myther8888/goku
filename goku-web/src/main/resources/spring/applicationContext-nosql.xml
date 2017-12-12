@@ -46,7 +46,7 @@
     </bean>
 
     <bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
-        <constructor-arg name="redisOperations" ref="stringRedisTemplate"/>
+        <constructor-arg name="redisOperations" ref="redisTemplate"/>
         <property name="cacheNames">
             <set>
                 <value>default1111</value>
