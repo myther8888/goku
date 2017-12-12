@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.yongle.goku.base.service.impl.BaseServiceImpl;
 import com.yongle.goku.constant.ErrorEnum;
 import com.yongle.goku.model.system.SysMenu;
+import com.yongle.goku.model.vo.Page;
 import com.yongle.goku.model.vo.ResultVO;
 import com.yongle.goku.model.vo.system.MenuVO;
 import com.yongle.goku.model.vo.system.UserVO;
@@ -12,6 +13,7 @@ import com.yongle.goku.system.service.MenuService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -89,5 +91,10 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuVO> implements MenuServ
     @Override
     public ResultVO enabled(Long id, UserVO currentUser) {
         return new ResultVO(ErrorEnum.SUCCESS);
+    }
+
+    @Override
+    public ResultVO<List<MenuVO>> findList(MenuVO menuVO, Page page, UserVO currentUser) {
+        return super.findList(menuVO, page, currentUser);
     }
 }

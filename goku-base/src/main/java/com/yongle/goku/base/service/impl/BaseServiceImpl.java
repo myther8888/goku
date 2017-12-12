@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author weinh
@@ -32,17 +33,17 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
-    public ResultVO findOne(Long id, UserVO currentUser) {
+    public ResultVO<T> findOne(Long id, UserVO currentUser) {
         return null;
     }
 
     @Override
-    public ResultVO findList(T t, Page page, UserVO currentUser) {
+    public ResultVO<List<T>> findList(T t, Page page, UserVO currentUser) {
         return null;
     }
 
     @Override
-    public ResultVO findAll(T t, UserVO currentUser) {
+    public ResultVO<List<T>> findAll(T t, UserVO currentUser) {
         return null;
     }
 

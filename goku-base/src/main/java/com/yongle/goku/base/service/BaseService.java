@@ -4,6 +4,8 @@ import com.yongle.goku.model.vo.Page;
 import com.yongle.goku.model.vo.ResultVO;
 import com.yongle.goku.model.vo.system.UserVO;
 
+import java.util.List;
+
 /**
  * 类 名 称：BaseService.java
  * 功能说明：
@@ -37,7 +39,7 @@ public interface BaseService<T> {
      * @param currentUser 操作者
      * @return 返回结果
      */
-    ResultVO findOne(Long id, UserVO currentUser);
+    ResultVO<T> findOne(Long id, UserVO currentUser);
 
     /**
      * 分页获取对象
@@ -47,7 +49,7 @@ public interface BaseService<T> {
      * @param currentUser 操作者
      * @return 返回结果
      */
-    ResultVO findList(T t, Page page, UserVO currentUser);
+    ResultVO<List<T>> findList(T t, Page page, UserVO currentUser);
 
     /**
      * 获取所有有效对象
@@ -56,7 +58,7 @@ public interface BaseService<T> {
      * @param currentUser 操作者
      * @return 返回结果
      */
-    ResultVO findAll(T t, UserVO currentUser);
+    ResultVO<List<T>> findAll(T t, UserVO currentUser);
 
     /**
      * 禁用对象
