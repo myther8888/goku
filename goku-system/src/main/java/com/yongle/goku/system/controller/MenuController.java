@@ -31,7 +31,7 @@ public class MenuController extends BaseController {
     @Resource
     private MenuService menuService;
 
-    @PostMapping("/menu")
+    @PostMapping
     public ResultVO save(@Valid @RequestBody MenuVO menuVO,
                          HttpServletRequest request, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -40,7 +40,7 @@ public class MenuController extends BaseController {
         return menuService.save(menuVO, getCurrentUser(request));
     }
 
-    @PutMapping("/menu/{id}")
+    @PutMapping("/{id}")
     public ResultVO update(@PathVariable(name = "id") Long id,
                            @Valid @RequestBody MenuVO menuVO,
                            BindingResult bindingResult,
@@ -51,7 +51,7 @@ public class MenuController extends BaseController {
         return menuService.update(id, menuVO, getCurrentUser(request));
     }
 
-    @GetMapping("/menu/{id}")
+    @GetMapping("/{id}")
     public ResultVO findOne(@PathVariable(name = "id") Long id,
                             HttpServletRequest request) {
         return menuService.findOne(id, getCurrentUser(request));
@@ -66,14 +66,14 @@ public class MenuController extends BaseController {
         return menuService.findList(menuVO, page, getCurrentUser(request));
     }
 
-    @DeleteMapping("/menu/{id}")
+    @DeleteMapping("/{id}")
     public ResultVO disabled(@PathVariable(name = "id") Long id,
                              HttpServletRequest request) {
         return menuService.disabled(id, getCurrentUser(request));
     }
 
 
-    @PostMapping("/menu/{id}")
+    @PostMapping("/{id}")
     public ResultVO enabled(@PathVariable(name = "id") Long id,
                             HttpServletRequest request) {
         return menuService.enabled(id, getCurrentUser(request));
