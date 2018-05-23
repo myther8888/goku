@@ -14,9 +14,7 @@ import javax.sql.DataSource;
  * Created by weinh on 2016/5/7.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/spring/applicationContext-service.xml",
-        "classpath:/spring/applicationContext-dao.xml",
-        "classpath:/spring/applicationContext-nosql.xml"})
+@ContextConfiguration(locations = {"classpath:/spring/applicationContext-*.xml"})
 public class JUnitServiceBase {
     final Logger log = LoggerFactory.getLogger(getClass());
 }
