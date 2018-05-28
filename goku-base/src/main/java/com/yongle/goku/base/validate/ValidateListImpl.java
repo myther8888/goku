@@ -23,13 +23,10 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
- * <p>类名称：ValidateListImpl
- * <p>描述说明：校验集合的实现类
- * <p>作者单位：恒生芸擎网络有限公司
- * <p>版本号：2.0.0.0
- *
- * @author weinh
- * @date 2017-12-20 11:12
+ * 类 名 称：ValidateListImpl.java
+ * 功能说明：
+ * 开发人员：weinh
+ * 开发时间：2018年04月24日
  */
 public class ValidateListImpl implements ConstraintValidator<ValidateList, List> {
 

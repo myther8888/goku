@@ -19,13 +19,10 @@ import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * <p>类名称：ValidateList
- * <p>描述说明：校验对象中的集合（包括里面的元素字段）
- * <p>作者单位：恒生芸擎网络有限公司
- * <p>版本号：2.0.0.0
- *
- * @author weinh
- * @date 2017-12-20 11:10
+ * 类 名 称：ValidateList.java
+ * 功能说明：
+ * 开发人员：weinh
+ * 开发时间：2018年04月24日
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
