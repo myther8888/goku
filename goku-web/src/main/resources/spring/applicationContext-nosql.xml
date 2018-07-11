@@ -33,6 +33,7 @@
         <property name="password" value="${redis.password}"/>
         <property name="poolConfig" ref="jedisPoolConfig"/>
         <property name="port" value="${redis.host.port}"/>
+        <property name="hostName" value="10.253.163.38"/>
         <!--<constructor-arg ref="redisSentinelConfigurationEX"/>-->
     </bean>
 
