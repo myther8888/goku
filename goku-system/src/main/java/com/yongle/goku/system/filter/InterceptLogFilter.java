@@ -41,7 +41,7 @@ public class InterceptLogFilter implements Filter {
         logger.info("开始调用接口：{},{}，调用接口body参数：{}，url参数：{}",
                 request.getMethod(), request.getRequestURI(), json, JSONObject.toJSONString(request.getParameterMap()));
         filterChain.doFilter(requestWrapper, servletResponse);
-        logger.info("调用接口结束：{}，耗时：{}ms，{}", request.getRequestURI(), System.currentTimeMillis() - t1);
+        logger.info("调用接口结束：{}，耗时：{}ms", request.getRequestURI(), System.currentTimeMillis() - t1);
     }
 
     @Override
