@@ -77,4 +77,13 @@
 		<filter-name>shiroFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<!--请求日志拦截-->
+	<filter>
+		<filter-name>interceptLogFilter</filter-name>
+		<filter-class>com.yongle.goku.system.filter.InterceptLogFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>interceptLogFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 </web-app>
