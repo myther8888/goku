@@ -38,7 +38,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
-    public ResultVO<List<T>> findList(T t, Page page, UserVO currentUser) {
+    public ResultVO<Page<T>> findByPage(T t, Page page, UserVO currentUser) {
         return null;
     }
 

@@ -13,6 +13,10 @@ public class Page<T> {
     private int pageSize;
     private List<T> list;
 
+    public Page() {
+
+    }
+
     public Page(PageInfo<T> pageInfo) {
         this.total = pageInfo.getTotal();
         this.pageNum = pageInfo.getPageNum();

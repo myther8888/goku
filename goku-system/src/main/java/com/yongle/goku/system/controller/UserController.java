@@ -40,45 +40,4 @@ public class UserController extends BaseController {
     public ResultVO logout(HttpServletRequest request) {
         return userService.logout(getCurrentUser(request));
     }
-
-    @GetMapping()
-    public ResultVO findList(@RequestParam(name = "page_num", defaultValue = Constants.DEFAULT_PAGE_NUM) int pageNum,
-                             @RequestParam(name = "page_size", defaultValue = Constants.DEFAULT_PAGE_SIZE) int pageSize,
-                             HttpServletRequest request) {
-        UserVO userVO = new UserVO();
-        Page page = new Page(pageNum, pageSize);
-        return userService.findList(userVO, page, getCurrentUser(request));
-    }
-
-    @GetMapping("/user/{id}")
-    public ResultVO findOne(@PathVariable(name = "id") Long id,
-                            HttpServletRequest request) {
-        return userService.findOne(id, getCurrentUser(request));
-    }
-
-    @PutMapping("/user/{id}")
-    public ResultVO update(@PathVariable(name = "id") Long id,
-                           @Valid @RequestBody UserVO userVO,
-                           BindingResult bindingResult,
-                           HttpServletRequest request) {
-        if (bindingResult.hasErrors()) {
-            return validatorParam(bindingResult);
-        }
-        return userService.update(id, userVO, getCurrentUser(request));
-    }
-
-    @DeleteMapping("/user/{id}")
-    public ResultVO disabled(@PathVariable(name = "id") Long id,
-                             HttpServletRequest request) {
-        return userService.disabled(id, getCurrentUser(request));
-    }
-
-    @PostMapping("/user")
-    public ResultVO save(@Valid @RequestBody UserVO userVO,
-                         HttpServletRequest request, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return validatorParam(bindingResult);
-        }
-        return userService.save(userVO, getCurrentUser(request));
-    }
 }

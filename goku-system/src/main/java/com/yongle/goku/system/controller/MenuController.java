@@ -58,12 +58,9 @@ public class MenuController extends BaseController {
     }
 
     @GetMapping()
-    public ResultVO findList(@RequestParam(name = "page_num", defaultValue = Constants.DEFAULT_PAGE_NUM) int pageNum,
-                             @RequestParam(name = "page_size", defaultValue = Constants.DEFAULT_PAGE_SIZE) int pageSize,
-                             HttpServletRequest request) {
+    public ResultVO findList(Page page, HttpServletRequest request) {
         MenuVO menuVO = new MenuVO();
-        Page page = new Page(pageNum, pageSize);
-        return menuService.findList(menuVO, page, getCurrentUser(request));
+        return menuService.findByPage(menuVO, page, getCurrentUser(request));
     }
 
     @DeleteMapping("/{id}")

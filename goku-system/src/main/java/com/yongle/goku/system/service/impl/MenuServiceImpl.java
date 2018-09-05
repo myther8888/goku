@@ -1,13 +1,17 @@
 package com.yongle.goku.system.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yongle.goku.base.service.impl.BaseServiceImpl;
 import com.yongle.goku.constant.ErrorEnum;
 import com.yongle.goku.model.system.SysMenu;
+import com.yongle.goku.model.system.SysMenuExample;
 import com.yongle.goku.model.vo.Page;
 import com.yongle.goku.model.vo.ResultVO;
 import com.yongle.goku.model.vo.system.MenuVO;
 import com.yongle.goku.model.vo.system.UserVO;
+import com.yongle.goku.system.mapper.SysMenuMapper;
 import com.yongle.goku.system.mapper.SysMenuMapperExt;
 import com.yongle.goku.system.service.MenuService;
 import org.springframework.stereotype.Service;
@@ -27,6 +31,9 @@ import java.util.Set;
 public class MenuServiceImpl extends BaseServiceImpl<MenuVO> implements MenuService {
     @Resource
     private SysMenuMapperExt menuMapperExt;
+
+    @Resource
+    private SysMenuMapper menuMapper;
 
     @Override
     public List<SysMenu> findAllFunctionPoint() {
@@ -94,7 +101,7 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuVO> implements MenuServ
     }
 
     @Override
-    public ResultVO<List<MenuVO>> findList(MenuVO menuVO, Page page, UserVO currentUser) {
-        return super.findList(menuVO, page, currentUser);
+    public ResultVO<Page<MenuVO>> findByPage(MenuVO menuVO, Page page, UserVO currentUser) {
+        return new ResultVO<>();
     }
 }

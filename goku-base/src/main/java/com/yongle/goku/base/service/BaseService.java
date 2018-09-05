@@ -49,7 +49,7 @@ public interface BaseService<T> {
      * @param currentUser 操作者
      * @return 返回结果
      */
-    ResultVO<List<T>> findList(T t, Page page, UserVO currentUser);
+    ResultVO<Page<T>> findByPage(T t, Page page, UserVO currentUser);
 
     /**
      * 获取所有有效对象
