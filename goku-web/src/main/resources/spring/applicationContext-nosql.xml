@@ -28,13 +28,18 @@
     <!--<constructor-arg value="${redis.host.port}"/>-->
     <!--<property name="maxRedirects" value="${redis.maxRedirects}"/>-->
     <!--</bean>-->
+    <!--<bean id="jedisConnectionFactory"-->
+          <!--class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">-->
+        <!--<property name="password" value="${redis.password}"/>-->
+        <!--<property name="poolConfig" ref="jedisPoolConfig"/>-->
+        <!--<constructor-arg ref="redisSentinelConfigurationEX"/>-->
+    <!--</bean>-->
     <bean id="jedisConnectionFactory"
           class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
         <property name="password" value="${redis.password}"/>
         <property name="poolConfig" ref="jedisPoolConfig"/>
-        <property name="port" value="${redis.host.port}"/>
-        <property name="hostName" value="10.253.163.38"/>
-        <!--<constructor-arg ref="redisSentinelConfigurationEX"/>-->
+        <property name="port" value="${redis.port}"/>
+        <property name="hostName" value="${redis.host}"/>
     </bean>
 
     <bean id="genericJackson2JsonRedisSerializer"

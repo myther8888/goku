@@ -23,17 +23,13 @@ public class BaseController {
     /**
      * 全局异常处理
      *
-     * @param e
-     * @return
+     * @param e 异常
+     * @return 异常提示
      */
     @ExceptionHandler({Exception.class})
     public ResultVO exception(Exception e) {
         log.error(e.getMessage(), e);
-        ResultVO vo = new ResultVO(ErrorEnum.ERROR);
-        if ("true".equals(ConfigUtils.getProperty("debug"))) {
-            vo.setDescription(e.getLocalizedMessage());
-        }
-        return vo;
+        return new ResultVO(ErrorEnum.ERROR);
     }
 
     protected ResultVO validatorParam(BindingResult result) {

@@ -1,5 +1,6 @@
 package com.yongle.goku.model.vo;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yongle.goku.constant.ErrorEnum;
 
 /**
@@ -8,7 +9,6 @@ import com.yongle.goku.constant.ErrorEnum;
 public class ResultVO<T> {
     private Integer errorCode;
     private String errorInfo;
-    private String description;
     private T data;
 
     public ResultVO() {
@@ -37,19 +37,16 @@ public class ResultVO<T> {
         this.errorInfo = errorInfo;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public Integer getErrorCode() {
         return errorCode;
     }
 
     public void setErrorCode(Integer errorCode) {
         this.errorCode = errorCode;
+    }
+
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
     }
 }

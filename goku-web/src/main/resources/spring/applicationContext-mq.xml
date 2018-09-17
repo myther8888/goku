@@ -6,22 +6,22 @@
        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
        http://activemq.apache.org/schema/core
        http://activemq.apache.org/schema/core/activemq-core-5.13.3.xsd">
-    <!-- a pooling based JMS provider -->
-    <amq:connectionFactory id="connectionFactory" brokerURL="${mq.url}" trustAllPackages="true"/>
-    <bean id="jmsFactory" class="org.apache.activemq.pool.PooledConnectionFactory"
-          destroy-method="stop">
-        <property name="connectionFactory" ref="connectionFactory"/>
-    </bean>
+    <!--&lt;!&ndash; a pooling based JMS provider &ndash;&gt;-->
+    <!--<amq:connectionFactory id="connectionFactory" brokerURL="${mq.url}" trustAllPackages="true"/>-->
+    <!--<bean id="jmsFactory" class="org.apache.activemq.pool.PooledConnectionFactory"-->
+          <!--destroy-method="stop">-->
+        <!--<property name="connectionFactory" ref="connectionFactory"/>-->
+    <!--</bean>-->
 
-    <!-- Spring JMS Template -->
-    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-        <property name="connectionFactory">
-            <ref local="jmsFactory"/>
-        </property>
-        <property name="explicitQosEnabled" value="true"/><!-- 使deliveryMode,priority,timeToLive设置生效 -->
-        <property name="priority" value="4"/><!-- 设置优先级，默认为4，越高优先级越高。kahaDB只支持3种优先级，<4,=4,>4 -->
-    </bean>
+    <!--&lt;!&ndash; Spring JMS Template &ndash;&gt;-->
+    <!--<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">-->
+        <!--<property name="connectionFactory">-->
+            <!--<ref local="jmsFactory"/>-->
+        <!--</property>-->
+        <!--<property name="explicitQosEnabled" value="true"/>&lt;!&ndash; 使deliveryMode,priority,timeToLive设置生效 &ndash;&gt;-->
+        <!--<property name="priority" value="4"/>&lt;!&ndash; 设置优先级，默认为4，越高优先级越高。kahaDB只支持3种优先级，<4,=4,>4 &ndash;&gt;-->
+    <!--</bean>-->
 
-    <!-- activeMQ消息目标队列 -->
-    <amq:queue id="messageSendQueue" physicalName="message.send.queue"/>
+    <!--&lt;!&ndash; activeMQ消息目标队列 &ndash;&gt;-->
+    <!--<amq:queue id="messageSendQueue" physicalName="message.send.queue"/>-->
 </beans>

@@ -77,7 +77,6 @@ public class SignatureInterceptor {
             vo = (ResultVO) pjp.proceed();
         } catch (Throwable throwable) {
             log.error(throwable.getMessage(), throwable);
-            vo.setDescription(throwable.getLocalizedMessage());
         }
         return vo;
     }
